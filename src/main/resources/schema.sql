@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS USERS (
   salt VARCHAR,
   password VARCHAR,
   firstname VARCHAR(20),
-  lastname VARCHAR(20)
+  lastname VARCHAR(20),
+  CONSTRAINT UC_Username UNIQUE (username)
 );
 
 CREATE TABLE IF NOT EXISTS NOTES (
