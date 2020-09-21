@@ -37,15 +37,3 @@ public interface CredentialMapper {
     int deleteAll();
 
 }
-
-/*
-    credentialid INT PRIMARY KEY auto_increment,
-        url VARCHAR(100),
-        username VARCHAR (30),
-        key VARCHAR,
-        password VARCHAR,
-        userid INT,
-        foreign key (userid) references USERS(userid)
-
-
- */
