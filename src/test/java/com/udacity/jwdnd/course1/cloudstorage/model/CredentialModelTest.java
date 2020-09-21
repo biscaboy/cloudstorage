@@ -107,7 +107,6 @@ public class CredentialModelTest {
                     () -> assertEquals(credential.getPassword(), updatedCredential.getPassword()),
                     () -> assertEquals(credential.getUserId(), updatedCredential.getUserId())
             );
-            
         }
 
         @Test
@@ -124,7 +123,5 @@ public class CredentialModelTest {
             ArrayList<Credential> noCredentials = credentialMapper.getCredentials(testUser);
             assertEquals(0, noCredentials.size());
         }
-
-
     }
 }

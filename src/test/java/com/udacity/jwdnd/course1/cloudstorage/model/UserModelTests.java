@@ -1,11 +1,9 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
-
 import com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
 import org.junit.jupiter.api.*;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,7 +28,7 @@ public class UserModelTests {
 
     @AfterEach
     public void afterEach() {
-        // @todo Figure out if there is a way to rest the database state with an Annotations (@DirtiesContext?).
+        // @todo Figure out if there is a way to reset the database state with an Annotations (@DirtiesContext?).
         userMapper.deleteAll();
     }
 
@@ -101,8 +99,6 @@ public class UserModelTests {
             User nullUser = userMapper.getUser(testUser.getUsername());
             assertNull(nullUser, "User still exists in the database after delete.");
         }
-
-
     }
 
     @Nested
@@ -110,7 +106,7 @@ public class UserModelTests {
     class ShouldNotAllow {
 
         @Test
-        @DisplayName("Should not create existing user")
+        @DisplayName("Should not create a user with and existing user name")
         public void testCreateExistingUser(){
             int result = userMapper.insert(testUser);
             assertEquals(1, result);
@@ -120,5 +116,4 @@ public class UserModelTests {
             assertTrue(actualMessage.contains(expectedMessage));
         }
     }
-
 }

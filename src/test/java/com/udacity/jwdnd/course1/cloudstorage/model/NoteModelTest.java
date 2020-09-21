@@ -48,7 +48,7 @@ public class NoteModelTest {
 
     @AfterEach
     public void afterEach() {
-        // @todo Figure out if there is a way to rest the database state with an Annotations (@DirtiesContext?).
+        // @todo Figure out if there is a way to reset the database state with an Annotations (@DirtiesContext?).
         noteMapper.deleteAll();
         userMapper.deleteAll();
     }
@@ -103,10 +103,6 @@ public class NoteModelTest {
                     () -> assertEquals(newNote.getDescription(), updatedNote.getDescription()),
                     () -> assertEquals(newNote.getUserId(), updatedNote.getUserId())
             );
-
-
-
-
         }
 
         @Test
