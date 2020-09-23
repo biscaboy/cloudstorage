@@ -4,6 +4,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.sql.Driver;
 
 public class SignupPage {
 
@@ -28,6 +32,12 @@ public class SignupPage {
     @FindBy(id = "error-msg")
     private WebElement errorMsg;
 
+    @FindBy(id = "cont-to-login")
+    private WebElement continueLink;
+
+    @FindBy(id = "back-to-login")
+    private WebElement backLink;
+
     public SignupPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -40,12 +50,23 @@ public class SignupPage {
         submitButton.click();
     }
 
-    public String getSuccessMsg(){
-        return successMsg.getText();
+    public String getSuccessMsg(WebDriver driver){
+        WebDriverWait wait = new WebDriverWait(driver, 2);
+        return wait.until(ExpectedConditions.elementToBeClickable(continueLink)).getText();
     }
 
     public String getErrorMsg(){
         return errorMsg.getText();
+    }
+
+    public void clickContinueLink(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.elementToBeClickable(continueLink)).click();
+        wait.until(ExpectedConditions.titleIs("Login"));
+    }
+
+    public void clickGoBackLink() {
+        backLink.click();
     }
 }
 
