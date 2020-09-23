@@ -27,6 +27,9 @@ public class LoginPage {
     @FindBy(id = "msg-invalid")
     private WebElement msgInvalid;
 
+    @FindBy(id = "sign-up-link")
+    private WebElement signUpLink;
+
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -58,6 +61,10 @@ public class LoginPage {
 
     public boolean isInvalidUserIdOrPassword() {
         return msgInvalid != null;
+    }
+
+    public void clickSignUpLink() {
+        signUpLink.click();
     }
 
     public boolean isPageLoaded(WebDriver driver) {

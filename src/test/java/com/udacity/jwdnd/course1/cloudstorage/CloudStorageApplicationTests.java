@@ -93,6 +93,14 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
+	@DisplayName("Click the 'Click here to sign up' link.")
+	public void testClickHereToSignUp() {
+		driver.get(baseURL + this.port + "/login");
+		loginPage.clickSignUpLink();
+		assertEquals("Sign Up", driver.getTitle());
+	}
+
+	@Test
 	@DisplayName("Register an existing user.")
 	public void testRegisterUserExists() {
 		signupPage.signUp("John", "Doe", "jdoe", "1234");
