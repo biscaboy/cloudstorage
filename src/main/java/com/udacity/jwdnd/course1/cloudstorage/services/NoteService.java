@@ -16,12 +16,12 @@ public class NoteService {
         this.noteMapper = noteMapper;
     }
 
-    public int updateNote(Note note){
-        return this.noteMapper.update(note);
+    public boolean updateNote(Note note){
+        return this.noteMapper.update(note) == 1;
     }
 
-    public int createNote(Note note) {
-        return noteMapper.insert(note);
+    public boolean createNote(Note note) {
+        return noteMapper.insert(note) == 1;
     }
 
     public ArrayList<Note> getNotes(User user){
@@ -31,8 +31,6 @@ public class NoteService {
     public boolean deleteNote(Note note){
         return noteMapper.delete(note) == 1;
     }
-
-    public int deleteNotes(User user) {return noteMapper.deleteNotes(user);}
 
     public int deleteAllNotes() {
         return noteMapper.deleteAll();

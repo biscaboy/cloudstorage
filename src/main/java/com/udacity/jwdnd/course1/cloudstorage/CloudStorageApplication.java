@@ -25,14 +25,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 		Java Exceptions - https://www.w3schools.com/java/java_try_catch.asp
  * 		Hidden Attribute - https://www.w3schools.com/TAGS/att_hidden.asp
  * JavaDevJournal - Uploading File with Spring Boot - https://www.javadevjournal.com/spring/spring-file-upload/
- * Contributors at Stack Overflow:
+ * Contributors of Answers at Stack Overflow:
  * 		Michael Pollmeier: Reading bytes from a file - https://stackoverflow.com/questions/858980/file-to-byte-in-java
  * 		Chirs Mowforth: Getting a file's mime type - https://stackoverflow.com/questions/51438/getting-a-files-mime-type-in-java
  *		bmargulies: writing files - https://stackoverflow.com/questions/4350084/byte-to-file-in-java
  *		lorinpa: Test Context Configuration  - 	https://stackoverflow.com/questions/21414750/spring-mvc-junit-test-applicationcontext-config#21414920
+ *		dubbe:  Twitter Bootstrap Tabs - https://bit.ly/2FSND7O
  *	Junit 5 Doc - https://junit.org/junit5/
  *	Oracle Java SE 8 Javadoc - https://docs.oracle.com/javase/8/docs/api/overview-summary.html
  *  MyBatis-Spring - http://mybatis.org/spring/
+ *  Spring Framework Guru - Using @RequestMapping - https://springframework.guru/spring-requestmapping-annotation/
+ *  Guru99 - XPath in Selenium Web Driver - https://www.guru99.com/xpath-selenium.html
  */
 @SpringBootApplication
 public class CloudStorageApplication {

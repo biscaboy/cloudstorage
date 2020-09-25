@@ -71,9 +71,9 @@ public class NoteModelTest {
             ArrayList<Note> notes = noteMapper.getNotes(testUser);
             assertAll("note",
                     () -> assertEquals(1, notes.size()),
-                    () -> assertNotNull(notes.get(0).getId()),
-                    () -> assertEquals(testNote.getTitle(), notes.get(0).getTitle()),
-                    () -> assertEquals(testNote.getDescription(), notes.get(0).getDescription()),
+                    () -> assertNotNull(notes.get(0).getNoteId()),
+                    () -> assertEquals(testNote.getNoteTitle(), notes.get(0).getNoteTitle()),
+                    () -> assertEquals(testNote.getNoteDescription(), notes.get(0).getNoteDescription()),
                     () -> assertEquals(testNote.getUserId(), notes.get(0).getUserId())
             );
         }
@@ -88,8 +88,8 @@ public class NoteModelTest {
             // instantiate a new note with the new id and update title and desc.
             ArrayList<Note> notes = noteMapper.getNotes(testUser);
             Note newNote = notes.get(0);
-            newNote.setTitle("Things to do");
-            newNote.setDescription("Go to the store. Buy carrots.");
+            newNote.setNoteTitle("Things to do");
+            newNote.setNoteDescription("Go to the store. Buy carrots.");
             int newResult = noteMapper.update(newNote);
             assertEquals(1, result);
 
@@ -98,9 +98,9 @@ public class NoteModelTest {
             Note updatedNote = updatedNotes.get(0);
             assertAll("note",
                     () -> assertEquals(1, updatedNotes.size()),
-                    () -> assertEquals(newNote.getId(), updatedNote.getId()),
-                    () -> assertEquals(newNote.getTitle(), updatedNote.getTitle()),
-                    () -> assertEquals(newNote.getDescription(), updatedNote.getDescription()),
+                    () -> assertEquals(newNote.getNoteId(), updatedNote.getNoteId()),
+                    () -> assertEquals(newNote.getNoteTitle(), updatedNote.getNoteTitle()),
+                    () -> assertEquals(newNote.getNoteDescription(), updatedNote.getNoteDescription()),
                     () -> assertEquals(newNote.getUserId(), updatedNote.getUserId())
             );
         }

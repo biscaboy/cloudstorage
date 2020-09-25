@@ -7,15 +7,15 @@ import lombok.Setter;
 @Data
 public class Note {
 
-    @Getter @Setter private Integer id;
-    @Getter @Setter private String title;
-    @Getter @Setter private String description;
+    @Getter @Setter private Integer noteId;
+    @Getter @Setter private String noteTitle;
+    @Getter @Setter private String noteDescription;
     @Getter @Setter private Integer userId;
 
-    public Note(Integer id, String title, String description, Integer userId) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
+    public Note(Integer noteId, String noteTitle, String noteDescription, Integer userId) {
+        this.noteId = noteId;
+        this.noteTitle = noteTitle;
+        this.noteDescription = noteDescription;
         this.userId = userId;
     }
 }

@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
@@ -24,12 +25,11 @@ public class HomeController {
     }
 
     @GetMapping
-    public String displayHome(Authentication authentication,
-                              Model model) {
+    public String displayHome(Authentication authentication, Note note, Model model) {
         // populate model objects
         User _currentUser = userService.getUser(authentication.getName());
         model.addAttribute(_currentUser);
-        model.addAttribute(noteService.getNotes(_currentUser));
+        model.addAttribute("notes", noteService.getNotes(_currentUser));
         return "home";
     }
 }

@@ -70,8 +70,8 @@ public class NoteServiceTest {
         public void testCreateNote() {
             ArrayList<Note> testNotes = testNoteMap.get(testUser1.getUsername());
             Note n = testNotes.get(0);
-            int result = noteService.createNote(n);
-            assertEquals(1, result, "Failed to create new note.");
+            boolean result = noteService.createNote(n);
+            assertTrue(result, "Failed to create new note.");
         }
 
         @Test
@@ -80,22 +80,22 @@ public class NoteServiceTest {
             // create some notes for user
             String username1 = testUserList.get(0).getUsername();
             for (Note note : testNoteMap.get(username1)) {
-                int result = noteService.createNote(note);
-                assertEquals(1, result);
+                boolean result = noteService.createNote(note);
+                assertTrue(result);
             }
             ArrayList<Note> notes = noteService.getNotes(testUserList.get(0));
             assertAll("Get notes for user '" + testUserList.get(0) + "'.",
                     () -> assertEquals(3, notes.size()),
-                    () -> assertNotNull(notes.get(0).getId()),
-                    () -> assertEquals(notes.get(0).getId(), testNoteMap.get(username1).get(0).getId()),
+                    () -> assertNotNull(notes.get(0).getNoteId()),
+                    () -> assertEquals(notes.get(0).getNoteId(), testNoteMap.get(username1).get(0).getNoteId()),
                     () -> assertEquals(notes.get(0).getUserId(), testUserList.get(0).getUserId()),
-                    () -> assertEquals(notes.get(0).getTitle(), testNoteMap.get(username1).get(0).getTitle()),
-                    () -> assertEquals(notes.get(0).getDescription(), testNoteMap.get(username1).get(0).getDescription()),
-                    () -> assertNotNull(notes.get(2).getId()),
-                    () -> assertEquals(notes.get(2).getId(), testNoteMap.get(username1).get(2).getId()),
+                    () -> assertEquals(notes.get(0).getNoteTitle(), testNoteMap.get(username1).get(0).getNoteTitle()),
+                    () -> assertEquals(notes.get(0).getNoteDescription(), testNoteMap.get(username1).get(0).getNoteDescription()),
+                    () -> assertNotNull(notes.get(2).getNoteId()),
+                    () -> assertEquals(notes.get(2).getNoteId(), testNoteMap.get(username1).get(2).getNoteId()),
                     () -> assertEquals(notes.get(2).getUserId(), testNoteMap.get(username1).get(2).getUserId()),
-                    () -> assertEquals(notes.get(2).getTitle(), testNoteMap.get(username1).get(2).getTitle()),
-                    () -> assertEquals(notes.get(2).getDescription(), testNoteMap.get(username1).get(2).getDescription())
+                    () -> assertEquals(notes.get(2).getNoteTitle(), testNoteMap.get(username1).get(2).getNoteTitle()),
+                    () -> assertEquals(notes.get(2).getNoteDescription(), testNoteMap.get(username1).get(2).getNoteDescription())
             );
         }
 
@@ -104,8 +104,8 @@ public class NoteServiceTest {
         public void testDeleteNote() {
             // create a test note
             Note n = testNoteMap.get(testUserList.get(0).getUsername()).get(0);
-            int result = noteService.createNote(n);
-            assertEquals(1, result, "Failed to create new note.");
+            boolean result = noteService.createNote(n);
+            assertTrue(result, "Failed to create new note.");
 
             // retrieve the note from the database
             n = noteService.getNotes(testUserList.get(0)).get(0);
