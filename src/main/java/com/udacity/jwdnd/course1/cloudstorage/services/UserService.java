@@ -24,16 +24,13 @@ public class UserService {
     }
 
     public int createUser(User user) {
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
-        String encodedSalt = Base64.getEncoder().encodeToString(salt);
+        String encodedSalt = hashService.generateSalt();
         String hashedPassword = hashService.getHashedValue(user.getPassword(), encodedSalt);
         int result = 0;
         try {
             result = userMapper.insert(new User(null, user.getUsername(), encodedSalt, hashedPassword, user.getFirstName(), user.getLastName()));
         } catch (DuplicateKeyException e) {
-            // @todo: replace System.out using a logging service to log the error message.
+            // @TODO: replace System.out using a logging service to log the error message.
             System.out.println("Username '" + user.getUsername() + "' already exists.");
         }
         return result;

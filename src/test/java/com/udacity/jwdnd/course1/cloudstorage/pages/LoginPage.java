@@ -35,7 +35,7 @@ public class LoginPage {
     }
 
     public void login(WebDriver driver, String username, String password) {
-        /* @todo Find a WebDriverWait method to make the login page wait to load completely.
+        /* @TODO Find a WebDriverWait method to make the login page wait to load completely.
          * Tried to use a WebDriverWait, but not matter what I waited for nothing paused the page enough.
          * The problem is that the inputUsername field is not loading before the .sendKeys() method executes.
          *

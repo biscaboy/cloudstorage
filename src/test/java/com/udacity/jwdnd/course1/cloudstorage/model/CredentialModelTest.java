@@ -71,7 +71,7 @@ public class CredentialModelTest {
             ArrayList<Credential> credentials = credentialMapper.getCredentials(testUser);
             assertAll("credential",
                     () -> assertEquals(1, credentials.size()),
-                    () -> assertNotNull(credentials.get(0).getId()),
+                    () -> assertNotNull(credentials.get(0).getCredentialId()),
                     () -> assertEquals(testCredential.getUrl(), credentials.get(0).getUrl()),
                     () -> assertEquals(testCredential.getUsername(), credentials.get(0).getUsername()),
                     () -> assertEquals(testCredential.getKey(), credentials.get(0).getKey()),
@@ -100,7 +100,7 @@ public class CredentialModelTest {
             assertEquals(1, updatedCredentials.size());
             Credential updatedCredential = updatedCredentials.get(0);
             assertAll("updatedCredential",
-                    () -> assertEquals(credential.getId(), updatedCredential.getId()),
+                    () -> assertEquals(credential.getCredentialId(), updatedCredential.getCredentialId()),
                     () -> assertEquals(credential.getUrl(), updatedCredential.getUrl()),
                     () -> assertEquals(credential.getUsername(), updatedCredential.getUsername()),
                     () -> assertEquals(credential.getKey(), updatedCredential.getKey()),

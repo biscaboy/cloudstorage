@@ -34,7 +34,7 @@ public class SignupController {
 
         if (signupError == null) {
             int rowsAdded = userService.createUser(user);
-            // @todo Look at the userService and userMapper: -1 is never returned.  How is an error raise here?
+            // @TODO Look at the userService and userMapper: -1 is never returned.  How is an error raise here?
             if (rowsAdded < 0) {
                 signupError = "There was an error signing you up. Please try again.";
             }

@@ -71,7 +71,7 @@ public class SuperDuperFileModelTest {
 
     @AfterEach
     public void afterEach() {
-        // @todo Figure out if there is a way to reset the database state with an Annotations (@DirtiesContext?).
+        // @TODO Figure out if there is a way to reset the database state with an Annotations (@DirtiesContext?).
         fileMapper.deleteAll();
         userMapper.deleteAll();
     }

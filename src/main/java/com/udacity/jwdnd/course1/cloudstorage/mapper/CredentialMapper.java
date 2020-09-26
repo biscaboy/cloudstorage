@@ -9,7 +9,7 @@ import java.util.ArrayList;
 @Mapper
 public interface CredentialMapper {
     @Results(id = "credentialResultMap", value = {
-            @Result(property = "id", column = "credentialid"),
+            @Result(property = "credentialId", column = "credentialid"),
             @Result(property = "url", column = "url"),
             @Result(property = "username", column = "username"),
             @Result(property = "key", column = "key"),
@@ -20,13 +20,13 @@ public interface CredentialMapper {
     ArrayList<Credential> getCredentials(User user);
 
     @Insert("INSERT INTO CREDENTIALS (url, username, key, password, userid) VALUES (#{url}, #{username}, #{key}, #{password}, #{userId})")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
+    @Options(useGeneratedKeys = true, keyProperty = "credentialId")
     int insert(Credential credential);
 
-    @Update("UPDATE CREDENTIALS SET url = #{url}, username = #{username}, key = #{key}, password = #{password} where credentialid = #{id}")
+    @Update("UPDATE CREDENTIALS SET url = #{url}, username = #{username}, key = #{key}, password = #{password} where credentialid = #{credentialId}")
     int update(Credential credential);
 
-    @Delete("DELETE CREDENTIALS WHERE credentialid = #{id}")
+    @Delete("DELETE CREDENTIALS WHERE credentialid = #{credentialId}")
     int delete(Credential credential);
 
     /**

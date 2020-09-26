@@ -77,14 +77,17 @@ public class HomePage {
     @FindBy(id = "credentialTable")
     private WebElement credentialTable;
 
+    @FindBy(id ="note-row")
+    private List<WebElement> noteRows;
+
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 
     public boolean isPageLoaded(WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, 5000);
-        WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
-        return btn != null;
+        WebDriverWait _wait = new WebDriverWait(driver, 5000);
+        WebElement _btn = _wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
+        return _btn != null;
     }
 
     public void saveNote(String title, String description) {
@@ -93,6 +96,38 @@ public class HomePage {
         saveNoteButton.click();
     }
 
+    public String getLastAddedNoteEditButtonID(){
+        return getLastAddedButtonID(editNoteButtons);
+    }
+
+    public String getLastAddedNoteDeleteButtonID(){
+        return getLastAddedButtonID(deleteNoteButtons);
+    }
+
+    public String getLastAddedFileEditButtonID(){
+        return getLastAddedButtonID(editFileButtons);
+    }
+
+    public String getLastAddedFileDeleteButtonID(){
+        return getLastAddedButtonID(deleteFileButtons);
+    }
+
+    public String getLastAddedCredentialEditButtonID(){
+        return getLastAddedButtonID(editCredentialButtons);
+    }
+
+    public String getLastAddedCredentialDeleteButtonID(){
+        return getLastAddedButtonID(deleteCredentialButtons);
+    }
+
+    private String getLastAddedButtonID(List<WebElement> buttons) {
+        String _lastNoteId = null;
+        for (WebElement _button : buttons) {
+            _lastNoteId = _button.getAttribute("id");
+        }
+        return _lastNoteId;
+
+    }
     public void clickNotesTab() {
         navNotesTab.click();
     }
@@ -109,34 +144,34 @@ public class HomePage {
         addCredentialModalButton.click();
     }
 
-    public void clickEditNoteButton(int id) {
+    public void clickEditNoteButton(String id) {
         clickButton(editNoteButtons, id);
     }
 
-    public void clickDeleteNoteButton(int id) {
+    public void clickDeleteNoteButton(String id) {
         clickButton(deleteNoteButtons, id);
     }
 
-    public void clickEditFileButton(int id) {
+    public void clickEditFileButton(String id) {
         clickButton(editFileButtons, id);
     }
 
-    public void clickDeleteFileButton(int id) {
+    public void clickDeleteFileButton(String id) {
         clickButton(deleteFileButtons, id);
     }
 
-    public void clickEditCredentialButton(int id) {
+    public void clickEditCredentialButton(String id) {
         clickButton(editCredentialButtons, id);
     }
 
-    public void clickDeleteCredentialButton(int id) {
+    public void clickDeleteCredentialButton(String id) {
         clickButton(deleteCredentialButtons, id);
     }
 
-    private void clickButton(List<WebElement> buttons, int id) {
-        for (WebElement button : buttons) {
-            if (button.getAttribute("id").indexOf("-" + id) > 0 ) {
-                button.click();
+    private void clickButton(List<WebElement> buttons, String id) {
+        for (WebElement _button : buttons) {
+            if (_button.getAttribute("id").equals(id)) {
+                _button.click();
                 break;
             }
         }

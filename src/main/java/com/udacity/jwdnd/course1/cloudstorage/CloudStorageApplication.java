@@ -18,12 +18,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 		Testing in SpringBoot - https://www.baeldung.com/spring-boot-testing
  * Rajeev Singh - https://bit.ly/2ZWfDOJ - file upload example
  * How to Program Blog - https://howtoprogram.xyz/2017/01/17/read-file-and-resource-in-junit-test/ - Junit and files.
- * W3Schools.com - multiple topics
+ * W3Schools.com - multiple topics including...
  * 		Java Read Files https://www.w3schools.com/java/java_files_read.asp
- * 		SQL Insert Syntax - https://www.w3schools.com/sql/sql_insert.asp
- * 		SQL Update Syntax - https://www.w3schools.com/SQL/sql_update.asp
+ * 		SQL Syntax - https://www.w3schools.com/sql/sql_insert.asp
  * 		Java Exceptions - https://www.w3schools.com/java/java_try_catch.asp
- * 		Hidden Attribute - https://www.w3schools.com/TAGS/att_hidden.asp
+ * 		... and more html tags & attirbutes references and Java syntax.
+ *
  * JavaDevJournal - Uploading File with Spring Boot - https://www.javadevjournal.com/spring/spring-file-upload/
  * Contributors of Answers at Stack Overflow:
  * 		Michael Pollmeier: Reading bytes from a file - https://stackoverflow.com/questions/858980/file-to-byte-in-java
@@ -31,11 +31,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *		bmargulies: writing files - https://stackoverflow.com/questions/4350084/byte-to-file-in-java
  *		lorinpa: Test Context Configuration  - 	https://stackoverflow.com/questions/21414750/spring-mvc-junit-test-applicationcontext-config#21414920
  *		dubbe:  Twitter Bootstrap Tabs - https://bit.ly/2FSND7O
+ *		Maarten Bodewes - isBlank() vs isEmpty() - https://stackoverflow.com/questions/23419087/stringutils-isblank-vs-string-isempty
+ *
  *	Junit 5 Doc - https://junit.org/junit5/
  *	Oracle Java SE 8 Javadoc - https://docs.oracle.com/javase/8/docs/api/overview-summary.html
  *  MyBatis-Spring - http://mybatis.org/spring/
  *  Spring Framework Guru - Using @RequestMapping - https://springframework.guru/spring-requestmapping-annotation/
  *  Guru99 - XPath in Selenium Web Driver - https://www.guru99.com/xpath-selenium.html
+ * 	The Art of the Web - Html5 Validation Examples - https://www.the-art-of-web.com/html/html5-form-validation/
+ *  Useful Angle - Validate URL - https://usefulangle.com/post/36/javascript-validate-url-form-input-field-without-regex
+ *
+ *
+ *  Udacity Knowlegde Base Answers:
+ *  	Eban D - Escaping quotes in Thymeleaf - https://knowledge.udacity.com/questions/275287
+ * 		Utkarsh S - Generating a Secure Key - https://knowledge.udacity.com/questions/275248
  */
 @SpringBootApplication
 public class CloudStorageApplication {

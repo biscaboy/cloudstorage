@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/notes")
 public class NotesController {
@@ -26,7 +24,6 @@ public class NotesController {
         this.noteService = noteService;
     }
 
-    // @todo implent this method it may need to be a post to get the
     @GetMapping("/delete")
     public String deleteNote(Authentication authentication, @ModelAttribute Note note, Model model) {
 
@@ -40,8 +37,6 @@ public class NotesController {
         model.addAttribute("notes", noteService.getNotes(_currentUser));
         model.addAttribute("nav", "/home#nav-notes");
         return "result";
-
-
     }
 
     @PostMapping()

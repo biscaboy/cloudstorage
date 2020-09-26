@@ -1,7 +1,9 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
+import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.springframework.security.core.Authentication;
@@ -17,19 +19,23 @@ public class HomeController {
     private UserService userService;
     private NoteService noteService;
     // private FileService;
-    // private CredentialService;
+    private CredentialService credentialService;
 
-    public HomeController(UserService userService, NoteService noteService) {
+    public HomeController(UserService userService,
+                          NoteService noteService,
+                          CredentialService credentialService) {
         this.userService = userService;
         this.noteService = noteService;
+        this.credentialService = credentialService;
     }
 
     @GetMapping
-    public String displayHome(Authentication authentication, Note note, Model model) {
+    public String displayHome(Authentication authentication, Note note, Credential credential, Model model) {
         // populate model objects
-        User _currentUser = userService.getUser(authentication.getName());
-        model.addAttribute(_currentUser);
-        model.addAttribute("notes", noteService.getNotes(_currentUser));
+        User currentUser = userService.getUser(authentication.getName());
+        model.addAttribute(currentUser);
+        model.addAttribute("notes", noteService.getNotes(currentUser));
+        model.addAttribute("credentials", credentialService.getCredentials(currentUser));
         return "home";
     }
 }
