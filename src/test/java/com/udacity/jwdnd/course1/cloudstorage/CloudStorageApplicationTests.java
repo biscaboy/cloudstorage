@@ -50,10 +50,16 @@ class CloudStorageApplicationTests {
 		}
 	}
 
+	@Test
+	@DisplayName("Attempt to unauthorized access.")
+	public void testUnauthorizedAccess() {
+		driver.get(baseURL + this.port + "/home");
+		assertEquals("Login", driver.getTitle());
+	}
 
 	@Test
 	@DisplayName("Display login page.")
-	public void getLoginPage() {
+	public void testGetLoginPage() {
 		driver.get(baseURL + this.port + "/login");
 		assertEquals("Login", driver.getTitle());
 	}
@@ -122,5 +128,20 @@ class CloudStorageApplicationTests {
 		driver.get(baseURL + port + "/login");
 		loginPage.login(driver, username, password);
 		assertTrue(loginPage.isInvalidUserIdOrPassword());
+	}
+
+	@Test
+	@DisplayName("Logout a user.")
+	public void testLogout() {
+		String username = "jsmoe";
+		String password = "1234";
+		signupPage.signUp("Jack", "Smoe", username, password);
+		try {Thread.sleep(2000);} catch (Exception e){System.out.println(e.getMessage());}
+		signupPage.clickContinueLink(driver);
+		assertEquals("Login", driver.getTitle());
+		loginPage.login(driver, username, password);
+		assertTrue(homePage.isPageLoaded(driver), "Failed to redirect to the home page.");
+		homePage.clickLogoutButton();
+		assertEquals("Login", driver.getTitle());
 	}
 }

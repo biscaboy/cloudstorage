@@ -90,8 +90,6 @@ public class HomePage {
     @FindBy(id ="note-row")
     private List<WebElement> noteRows;
 
-
-
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -227,6 +225,10 @@ public class HomePage {
 
     public String getDecryptedPassword() {
         return credentialPasswordInput.getAttribute("value");
+    }
+
+    public void clickLogoutButton() {
+        logoutButton.click();
     }
 
 }
