@@ -16,7 +16,7 @@ public class EncryptionServiceTest {
     @Test
     @DisplayName("Generate a random key")
     public void testGenerateKey() {
-        String key = encryptionService.generateKey();
+        String key = encryptionService.generateSecureKey();
         assertNotNull(key, "Generated key is null");
         assertFalse(key.isBlank());
     }

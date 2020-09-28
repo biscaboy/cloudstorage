@@ -157,16 +157,14 @@ public class NoteIntegrationTests {
             bSuccessMsg = resultPage.isSuccessMessage();
             resultPage.clickNavLink();
             Thread.sleep(1000);
-            bSuccessDelete = homePage.isAnyNotes();
+            bSuccessDelete = homePage.isAnyNoteDisplayed();
         } catch (Exception e) {
             fail("Exception in testSaveNote: " + e.getMessage());
         }
         assertTrue(bSuccessMsg, "The success message was not displayed.");
-        assertTrue(bSuccessDelete, "The note was not deleted.");
+        assertFalse(bSuccessDelete, "The note was not deleted.");
         assertEquals(testTitle, resultTitle, "The new note title was never saved.");
         assertEquals(testDescription, resultDescription, "The new note description was never saved.");
     }
-
-    //@todo add a test that adds several notes/deletes notes for two different users.
 
 }

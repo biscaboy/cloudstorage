@@ -2,14 +2,14 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.mapper.UserMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
-import java.util.Base64;
-
 @Service
 public class UserService {
+    private Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private final UserMapper userMapper;
     private final HashService hashService;
@@ -30,8 +30,7 @@ public class UserService {
         try {
             result = userMapper.insert(new User(null, user.getUsername(), encodedSalt, hashedPassword, user.getFirstName(), user.getLastName()));
         } catch (DuplicateKeyException e) {
-            // @TODO: replace System.out using a logging service to log the error message.
-            System.out.println("Username '" + user.getUsername() + "' already exists.");
+            logger.error(e.getMessage());
         }
         return result;
     }

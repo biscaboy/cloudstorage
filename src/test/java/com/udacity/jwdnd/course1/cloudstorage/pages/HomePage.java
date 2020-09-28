@@ -1,8 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.pages;
 
-import com.udacity.jwdnd.course1.cloudstorage.model.User;
-import lombok.Data;
-import lombok.Getter;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,8 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomePage {
@@ -28,9 +24,11 @@ public class HomePage {
     @FindBy(id = "nav-files-tab")
     private WebElement navFilesTab;
 
-    // Notes
     @FindBy(id = "nav-notes-tab")
     private WebElement navNotesTab;
+
+    @FindBy(id = "nav-credentials-tab")
+    private WebElement navCredentialsTab;
 
     @FindBy(id = "btn-add-notes-modal")
     private WebElement addNotesModalButton;
@@ -49,6 +47,18 @@ public class HomePage {
 
     @FindBy(id = "btn-save-note")
     private WebElement saveNoteButton;
+
+    @FindBy(id = "btn-save-credential")
+    private WebElement saveCredentialButton;
+
+    @FindBy(id = "credential-url")
+    private WebElement credentialUrlInput;
+
+    @FindBy(id = "credential-username")
+    private WebElement credentialUsernameInput;
+
+    @FindBy(id = "credential-password")
+    private WebElement credentialPasswordInput;
 
     @FindBy(xpath = "//button[starts-with(@id,'btn-edit-note-')]")
     private List<WebElement> editNoteButtons;
@@ -80,6 +90,8 @@ public class HomePage {
     @FindBy(id ="note-row")
     private List<WebElement> noteRows;
 
+
+
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -94,6 +106,13 @@ public class HomePage {
         noteTitleInput.sendKeys(title);
         noteDescriptionInput.sendKeys(description);
         saveNoteButton.click();
+    }
+
+    public void saveCredential(String url, String username, String password) {
+        credentialUrlInput.sendKeys(url);
+        credentialUsernameInput.sendKeys(username);
+        credentialPasswordInput.sendKeys(password);
+        saveCredentialButton.click();
     }
 
     public String getLastAddedNoteEditButtonID(){
@@ -130,6 +149,10 @@ public class HomePage {
     }
     public void clickNotesTab() {
         navNotesTab.click();
+    }
+
+    public void clickCredentailsTab() {
+        navCredentialsTab.click();
     }
 
     public void clickAddNoteButton() {
@@ -177,17 +200,33 @@ public class HomePage {
         }
     }
 
-    public boolean isAnyNotes() {
-        return noteTable != null;
+    public boolean isAnyNoteDisplayed() {
+        return isElementDisplayed(noteTable);
+    }
+
+    public boolean isAnyCredentialDisplayed() {
+        return isElementDisplayed(credentialTable);
+    }
+
+    public boolean isAnyFileDisplayed() {
+        return isElementDisplayed(fileTable);
+    }
+
+    private boolean isElementDisplayed(WebElement elem) {
+        try {
+            elem.isDisplayed();
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     public boolean isAnyFiles() {
         return noteTable != null;
     }
 
-    public boolean isAnyCredentials() {
-        return noteTable != null;
+    public String getDecryptedPassword() {
+        return credentialPasswordInput.getAttribute("value");
     }
-
 
 }

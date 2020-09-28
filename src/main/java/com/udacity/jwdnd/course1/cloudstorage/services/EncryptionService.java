@@ -54,13 +54,14 @@ public class EncryptionService {
      * This method generates a key, but it is does not work with the
      * algorithms above.
      * @return
-     */
+     *
     public String generateKey() {
         SecureRandom random = new SecureRandom();
         byte[] key = new byte[8];
         random.nextBytes(key);
         return key.toString();
     }
+    */
 
     /**
      * Creates a Secure Key for encryption/decryption
