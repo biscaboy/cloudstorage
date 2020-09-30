@@ -1,11 +1,9 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
-public class Credential {
+public class Credential implements CloudStorageModel {
 
      private Integer credentialId;
      private String url;
@@ -21,5 +19,10 @@ public class Credential {
         this.key = key;
         this.password = password;
         this.userId = userId;
+    }
+
+    @Override
+    public String printName() {
+        return "credential";
     }
 }

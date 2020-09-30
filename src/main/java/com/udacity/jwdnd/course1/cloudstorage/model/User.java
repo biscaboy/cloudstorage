@@ -1,15 +1,15 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
-import lombok.*;
+import lombok.Data;
 
 @Data
 public class User {
-    @Getter @Setter private Integer userId;
-    @Getter @Setter private String username;
-    @Getter @Setter private String salt;
-    @Getter @Setter private String password;
-    @Getter @Setter private String firstName;
-    @Getter @Setter private String lastName;
+    private Integer userId;
+    private String username;
+    private String salt;
+    private String password;
+    private String firstName;
+    private String lastName;
 
     public User(Integer userId, String username, String salt, String password, String firstName, String lastName) {
         this.userId = userId;

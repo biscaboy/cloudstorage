@@ -2,6 +2,8 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
+import com.udacity.jwdnd.course1.cloudstorage.services.ResponsePackingService;
+import com.udacity.jwdnd.course1.cloudstorage.services.ValidationService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.springframework.security.core.Authentication;
@@ -18,62 +20,51 @@ public class NotesController {
 
     private UserService userService;
     private NoteService noteService;
+    private ValidationService validationService;
+    private ResponsePackingService packingService;
 
-    public NotesController(UserService userService, NoteService noteService) {
+    public NotesController(UserService userService, NoteService noteService,
+                           ValidationService validationService, ResponsePackingService packingService) {
         this.userService = userService;
         this.noteService = noteService;
+        this.validationService = validationService;
+        this.packingService = packingService;
+
     }
 
     @GetMapping("/delete")
     public String deleteNote(Authentication authentication, @ModelAttribute Note note, Model model) {
 
-        boolean result = false;
-        String message = null;
         User currentUser = userService.getUser(authentication.getName());
         note = noteService.getNote(note.getNoteId());
 
-        if (note.getUserId().intValue() == currentUser.getUserId().intValue()) {
+        boolean result = validationService.validate(note, currentUser, model,"delete");
+
+        if (result) {
             result = noteService.deleteNote(note);
-        } else {
-            message = "Only the note owner can delete this note.";
         }
 
-        if (message != null) {
-            model.addAttribute("message", message);
-        }
-        model.addAttribute("success", result);
-        model.addAttribute("notes", noteService.getNotes(currentUser));
-        model.addAttribute("nav", "/home#nav-notes");
-        return "result";
+        return packingService.packResultResponse(result, model, currentUser, noteService);
     }
 
     @PostMapping()
     public String editNote(Authentication authentication, @ModelAttribute Note note, Model model) {
 
         boolean result = false;
-        String message = null;
-
         User currentUser = userService.getUser(authentication.getName());
-        note.setUserId(currentUser.getUserId());
 
-        if (note == null) {
-            message = "The note was not found or doesn't exist.";
-        } else if (note.getUserId().intValue() != currentUser.getUserId().intValue()) {
-            message = "Only the note owner can create or edit this note.";
-        }
-        // is this a new note or existing note? New notes don't have an id yet.
-        else if (note.getNoteId() == null) {
+        if (note.getNoteId() == null) {
+            note.setUserId(currentUser.getUserId());
             result = noteService.createNote(note);
         } else {
-            result = noteService.updateNote(note);
+            Note existing = noteService.getNote(note.getNoteId());
+            result = validationService.validate(existing, currentUser, model,"create or edit");
+            if (result) {
+                note.setUserId(currentUser.getUserId());
+                result = noteService.updateNote(note);
+            }
         }
 
-        if (message != null) {
-            model.addAttribute("message", message);
-        }
-        model.addAttribute("success", result);
-        model.addAttribute("notes", noteService.getNotes(currentUser));
-        model.addAttribute("nav", "/home#nav-notes");
-        return "result";
+        return packingService.packResultResponse(result, model, currentUser, noteService);
     }
 }

@@ -1,8 +1,5 @@
 package com.udacity.jwdnd.course1.cloudstorage.exception;
 
-import ch.qos.logback.core.util.InvocationGate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;

@@ -121,14 +121,6 @@ public class HomePage {
         return getLastAddedButtonID(deleteNoteButtons);
     }
 
-    public String getLastAddedFileEditButtonID(){
-        return getLastAddedButtonID(editFileButtons);
-    }
-
-    public String getLastAddedFileDeleteButtonID(){
-        return getLastAddedButtonID(deleteFileButtons);
-    }
-
     public String getLastAddedCredentialEditButtonID(){
         return getLastAddedButtonID(editCredentialButtons);
     }
@@ -157,10 +149,6 @@ public class HomePage {
         addNotesModalButton.click();
     }
 
-    public void clickAddFileButton() {
-        addFileModalButton.click();
-    }
-
     public void clickAddCredentialButton() {
         addCredentialModalButton.click();
     }
@@ -171,14 +159,6 @@ public class HomePage {
 
     public void clickDeleteNoteButton(String id) {
         clickButton(deleteNoteButtons, id);
-    }
-
-    public void clickEditFileButton(String id) {
-        clickButton(editFileButtons, id);
-    }
-
-    public void clickDeleteFileButton(String id) {
-        clickButton(deleteFileButtons, id);
     }
 
     public void clickEditCredentialButton(String id) {
@@ -206,10 +186,6 @@ public class HomePage {
         return isElementDisplayed(credentialTable);
     }
 
-    public boolean isAnyFileDisplayed() {
-        return isElementDisplayed(fileTable);
-    }
-
     private boolean isElementDisplayed(WebElement elem) {
         try {
             elem.isDisplayed();
@@ -217,10 +193,6 @@ public class HomePage {
         } catch (NoSuchElementException e) {
             return false;
         }
-    }
-
-    public boolean isAnyFiles() {
-        return noteTable != null;
     }
 
     public String getDecryptedPassword() {

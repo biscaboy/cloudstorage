@@ -2,7 +2,8 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.SuperDuperFile;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
-import com.udacity.jwdnd.course1.cloudstorage.services.ModelService;
+import com.udacity.jwdnd.course1.cloudstorage.services.ResponsePackingService;
+import com.udacity.jwdnd.course1.cloudstorage.services.ValidationService;
 import com.udacity.jwdnd.course1.cloudstorage.services.SuperDuperFileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.apache.commons.text.StringEscapeUtils;
@@ -10,7 +11,6 @@ import org.apache.tomcat.util.http.fileupload.InvalidFileNameException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,13 +23,17 @@ public class SuperDuperFileController {
 
     private UserService userService;
     private SuperDuperFileService fileService;
-    private ModelService modelService;
+    private ValidationService validationService;
+    private ResponsePackingService packingService;
 
-    public SuperDuperFileController(UserService userService, SuperDuperFileService fileService,
-                                    ModelService modelService) {
+    public SuperDuperFileController(UserService userService,
+                                    SuperDuperFileService fileService,
+                                    ValidationService validationService,
+                                    ResponsePackingService packingService) {
         this.userService = userService;
         this.fileService = fileService;
-        this.modelService = modelService;
+        this.validationService = validationService;
+        this.packingService = packingService;
     }
 
     @GetMapping("/delete")
@@ -38,14 +42,13 @@ public class SuperDuperFileController {
         User currentUser = userService.getUser(authentication.getName());
         file = fileService.getFile(file.getFileId());
 
-        boolean result = modelService.validate(file, authentication,
-                currentUser, model,"delete");
+        boolean result = validationService.validate(file, currentUser, model,"delete");
 
         if (result) {
             result = fileService.deleteFile(file);
         }
 
-        return modelService.packResultResponse(result, model, currentUser, fileService);
+        return packingService.packResultResponse(result, model, currentUser, fileService);
     }
 
     @GetMapping("/download")
@@ -56,8 +59,7 @@ public class SuperDuperFileController {
         User currentUser = userService.getUser(authentication.getName());
         file = fileService.getFile(file.getFileId());
 
-        boolean result = modelService.validate(file, authentication,
-                currentUser, model,"download");
+        boolean result = validationService.validate(file, currentUser, model,"download");
 
         if (result) {
             // modify response
@@ -78,8 +80,7 @@ public class SuperDuperFileController {
         User currentUser = userService.getUser(authentication.getName());
         SuperDuperFile file = fileService.upload(multiPartFile, currentUser);
 
-        boolean result = modelService.validate(file, authentication,
-                currentUser, model,"create/edit");
+        boolean result = validationService.validate(file, currentUser, model,"create/edit");
 
         if (result) {
             try {
@@ -90,6 +91,6 @@ public class SuperDuperFileController {
             }
         }
 
-        return modelService.packResultResponse(result, model, currentUser, fileService);
+        return packingService.packResultResponse(result, model, currentUser, fileService);
     }
 }
