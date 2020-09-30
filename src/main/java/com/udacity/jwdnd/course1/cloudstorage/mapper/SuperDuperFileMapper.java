@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public interface SuperDuperFileMapper {
 
     @Results(id = "superDuperFileResultMap", value = {
-            @Result(property = "id", column = "fileId"),
+            @Result(property = "fileId", column = "fileId"),
             @Result(property = "name", column = "filename"),
             @Result(property = "contentType", column = "contenttype"),
             @Result(property = "size", column = "filesize"),
@@ -21,15 +21,22 @@ public interface SuperDuperFileMapper {
     @Select("SELECT * FROM FILES WHERE userid = #{userId}")
     ArrayList<SuperDuperFile> getFiles(User user);
 
+    @ResultMap("superDuperFileResultMap")
+    @Select("SELECT * FROM FILES WHERE fileId = #{fileId}")
+    SuperDuperFile getFile(Integer fileId);
+
+    @Select("SELECT COUNT(*) FROM FILES WHERE userid = #{userId} and filename = #{name}")
+    int countFilesByFilename(SuperDuperFile file);
+
     @Insert("INSERT INTO FILES (filename, contenttype, filesize, userid, filedata) VALUES (#{name}, #{contentType}, #{size}, #{userId}, #{data})")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
+    @Options(useGeneratedKeys = true, keyProperty = "fileId")
     int insert(SuperDuperFile file);
 
-    @Update("UPDATE FILES SET filename = #{name}, contenttype = #{contentType}, filesize = #{size}, filedata = #{data} where fileId = #{id}")
+    @Update("UPDATE FILES SET filename = #{name}, contenttype = #{contentType}, filesize = #{size}, filedata = #{data} where fileId = #{fileId}")
     int update(SuperDuperFile file);
 
-    @Delete("DELETE FILES WHERE fileid = #{id}")
-    int deleteFile(Integer id);
+    @Delete("DELETE FILES WHERE fileId = #{fileId}")
+    int deleteFile(Integer fileId);
 
     @Delete("DELETE FILES WHERE userid = #{userId}")
     int deleteFiles(User user);

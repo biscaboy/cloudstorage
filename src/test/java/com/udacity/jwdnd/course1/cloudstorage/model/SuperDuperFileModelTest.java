@@ -99,7 +99,7 @@ public class SuperDuperFileModelTest {
             ArrayList<SuperDuperFile> files = fileMapper.getFiles(testUser);
             assertAll("(super duper) file",
                     () -> assertEquals(1, files.size(), "The file was not returned from the database."),
-                    () -> assertNotNull(files.get(0).getId()),
+                    () -> assertNotNull(files.get(0).getFileId()),
                     () -> assertEquals(testFile.getName(), files.get(0).getName()),
                     () -> assertEquals(testFile.getContentType(), files.get(0).getContentType()),
                     () -> assertEquals(testFile.getSize(), files.get(0).getSize()),
@@ -142,7 +142,7 @@ public class SuperDuperFileModelTest {
             ArrayList<SuperDuperFile> files = fileMapper.getFiles(testUser);
             assertAll("(super duper) file",
                     () -> assertEquals(1, files.size(), "The file was not returned from the database."),
-                    () -> assertNotNull(files.get(0).getId()),
+                    () -> assertNotNull(files.get(0).getFileId()),
                     () -> assertEquals(testFile.getName(), files.get(0).getName()),
                     () -> assertEquals(testFile.getContentType(), files.get(0).getContentType()),
                     () -> assertEquals(testFile.getSize(), files.get(0).getSize()),
@@ -168,6 +168,7 @@ public class SuperDuperFileModelTest {
         public void testDeleteFile() {
             // insert two files
             fileMapper.insert(testFile);
+            testFile.setName("Another File.pdf");
             fileMapper.insert(testFile);
 
             // make sure the file was inserted properly
@@ -175,14 +176,14 @@ public class SuperDuperFileModelTest {
             assertEquals(2, files.size());
 
             // delete the files by id
-            Integer idToDelete = files.get(0).getId();
+            Integer idToDelete = files.get(0).getFileId();
             int result = fileMapper.deleteFile(idToDelete);
             assertEquals(1, result);
 
             // make sure the right files was deleted.
             files = fileMapper.getFiles(testUser);
             assertEquals(1, files.size());
-            assertNotEquals(idToDelete, files.get(0).getId(), "Deleted the wrong file.");
+            assertNotEquals(idToDelete, files.get(0).getFileId(), "Deleted the wrong file.");
         }
 
         @Test
@@ -191,6 +192,7 @@ public class SuperDuperFileModelTest {
             // insert the same file twice
             int result = fileMapper.insert(testFile);
             assertEquals(1, result);
+            testFile.setName("File 2.pdf");
             result = fileMapper.insert(testFile);
             assertEquals(1, result);
 

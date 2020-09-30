@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class CredentialService {
+public class CredentialService implements CloudStorageService {
 
     private CredentialMapper credentialMapper;
     private EncryptionService encryptionService;
@@ -51,5 +51,10 @@ public class CredentialService {
         String encryptedPassword = encryptionService.encryptValue(c.getPassword(), c.getKey());
         c.setPassword(encryptedPassword);
         return c;
+    }
+
+    @Override
+    public String getCollectionName() {
+        return "credentials";
     }
 }

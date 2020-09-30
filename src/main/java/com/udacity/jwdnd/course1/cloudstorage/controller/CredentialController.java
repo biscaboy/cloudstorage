@@ -31,7 +31,7 @@ public class CredentialController {
         String message = null;
 
         User currentUser = userService.getUser(authentication.getName());
-        credential = credentialService.getCredential(currentUser.getUserId());
+        credential = credentialService.getCredential(credential.getCredentialId());
 
         if (credential == null) {
             message = "The credential was not found or doesn't exist.";

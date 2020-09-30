@@ -57,14 +57,18 @@ public class SignupPage {
         return errorMsg.getText();
     }
 
-    public void clickContinueLink(WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.elementToBeClickable(continueLink)).click();
-        wait.until(ExpectedConditions.titleIs("Login"));
+    public void clickContinueLink() {
+        continueLink.click();
     }
 
     public void clickGoBackLink() {
         backLink.click();
+    }
+
+    public boolean waitUntilLoaded(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, 5000);
+        WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(submitButton));
+        return btn != null;
     }
 }
 

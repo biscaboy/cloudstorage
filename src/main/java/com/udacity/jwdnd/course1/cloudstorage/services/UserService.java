@@ -43,7 +43,4 @@ public class UserService {
         return userMapper.delete(user);
     }
 
-    public int deleteAllUsers() {
-        return userMapper.deleteAll();
-    }
 }

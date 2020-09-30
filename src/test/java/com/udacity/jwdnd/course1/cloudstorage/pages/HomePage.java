@@ -94,9 +94,9 @@ public class HomePage {
         PageFactory.initElements(driver, this);
     }
 
-    public boolean isPageLoaded(WebDriver driver) {
+    public boolean waitUntilLoaded(WebDriver driver) {
         WebDriverWait _wait = new WebDriverWait(driver, 5000);
-        WebElement _btn = _wait.until(ExpectedConditions.elementToBeClickable(logoutButton));
+        WebElement _btn = _wait.until(ExpectedConditions.elementToBeClickable(addCredentialModalButton));
         return _btn != null;
     }
 

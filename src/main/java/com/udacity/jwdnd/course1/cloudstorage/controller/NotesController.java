@@ -27,14 +27,22 @@ public class NotesController {
     @GetMapping("/delete")
     public String deleteNote(Authentication authentication, @ModelAttribute Note note, Model model) {
 
-        boolean _result;
+        boolean result = false;
+        String message = null;
+        User currentUser = userService.getUser(authentication.getName());
+        note = noteService.getNote(note.getNoteId());
 
-        User _currentUser = userService.getUser(authentication.getName());
+        if (note.getUserId().intValue() == currentUser.getUserId().intValue()) {
+            result = noteService.deleteNote(note);
+        } else {
+            message = "Only the note owner can delete this note.";
+        }
 
-        _result = noteService.deleteNote(note);
-
-        model.addAttribute("success", _result);
-        model.addAttribute("notes", noteService.getNotes(_currentUser));
+        if (message != null) {
+            model.addAttribute("message", message);
+        }
+        model.addAttribute("success", result);
+        model.addAttribute("notes", noteService.getNotes(currentUser));
         model.addAttribute("nav", "/home#nav-notes");
         return "result";
     }
@@ -42,21 +50,29 @@ public class NotesController {
     @PostMapping()
     public String editNote(Authentication authentication, @ModelAttribute Note note, Model model) {
 
-        boolean _result;
+        boolean result = false;
+        String message = null;
 
-        User _currentUser = userService.getUser(authentication.getName());
-        note.setUserId(_currentUser.getUserId());
+        User currentUser = userService.getUser(authentication.getName());
+        note.setUserId(currentUser.getUserId());
 
-        // is this a new note or existing note?
-        // new notes don't have an id yet.
-        if (note.getNoteId() == null) {
-            _result = noteService.createNote(note);
+        if (note == null) {
+            message = "The note was not found or doesn't exist.";
+        } else if (note.getUserId().intValue() != currentUser.getUserId().intValue()) {
+            message = "Only the note owner can create or edit this note.";
+        }
+        // is this a new note or existing note? New notes don't have an id yet.
+        else if (note.getNoteId() == null) {
+            result = noteService.createNote(note);
         } else {
-            _result = noteService.updateNote(note);
+            result = noteService.updateNote(note);
         }
 
-        model.addAttribute("success", _result);
-        model.addAttribute("notes", noteService.getNotes(_currentUser));
+        if (message != null) {
+            model.addAttribute("message", message);
+        }
+        model.addAttribute("success", result);
+        model.addAttribute("notes", noteService.getNotes(currentUser));
         model.addAttribute("nav", "/home#nav-notes");
         return "result";
     }

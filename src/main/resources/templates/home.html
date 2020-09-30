@@ -25,7 +25,7 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
-                        <form action="#" enctype="multipart/form-data" method="POST">
+                        <form id="file-upload" action="#" th:action="@{/files}" enctype="multipart/form-data" method="POST" onsubmit="return validateUploadForm()">
                             <div class="container">
                                 <div class="row" style="margin: 1em;">
                                     <div class="col-sm-2">
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="table-responsive">
+                        <div th:if="${files.size()} > 0" class="table-responsive">
                             <table class="table table-striped" id="fileTable">
                                 <thead>
                                     <tr>
@@ -49,12 +49,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="file : ${files}">
                                     <td>
-                                        <a target="_blank" class="btn btn-success">View</a>
-                                        <a  class="btn btn-danger">Delete</a>
+                                        <a th:href="${'/files/download?fileId=' + file.fileId}" target="_blank" class="btn btn-success">View</a>
+                                        <a th:href="${'/files/delete?fileId=' + file.fileId}" class="btn btn-danger">Delete</a>
                                     </td>
-                                    <th scope="row">ExampleFile.txt</th>
+                                    <th th:text="${file.name}" scope="row">ExampleFile.txt</th>
                                 </tr>
                                 </tbody>
                             </table>
@@ -189,7 +189,25 @@
                 </div>
             </div>
         </div>
-
+        <!-- Input Validation Modal -->
+        <div id="validation-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Upload File Required</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="validation-message"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script th:src="@{/js/jquery-slim.min.js}"></script>
         <script th:src="@{/js/popper.min.js}"></script>
         <script th:src="@{/js/bootstrap.min.js}"></script>
@@ -231,6 +249,15 @@
             $('.nav-tabs a').on('shown.bs.tab', function (e) {
                 window.location.hash = e.target.hash;
             })
+
+             function validateUploadForm() {
+                var x = document.forms["file-upload"]["fileUpload"].value;
+                if (x == "") {
+                    document.getElementById('validation-message').innerHTML = "Please select a file to upload.";
+                    $('#validation-modal').modal('show');
+                    return false;
+                }
+             }
         </script>
     </body>
 </html>

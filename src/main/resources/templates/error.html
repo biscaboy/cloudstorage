@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
+
+    <title>Error</title>
+</head>
+<body class="p-3 mb-2 bg-light text-black">
+<span hidden id="title">Error</span>
+<div class="container justify-content-center w-50 p-3" style="margin-top: 5em;">
+    <div id="error-msg" class="alert alert-danger fill-parent">
+        <h1 class="display-5">Error</h1>
+        <div><span>We bumped in to a problem.  Thanks for your patience.</span></div>
+        <div><span>Please return to the <a id="nav-link" href="/home">site</a>, or
+            go to the <a id="nav-link" href="/login">login page</a> to sign in.</span></div>
+    </div>
+</div>
+</body>
+</html>

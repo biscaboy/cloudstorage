@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS FILES (
     filesize VARCHAR,
     userid INT,
     filedata BLOB,
-    foreign key (userid) references USERS(userid)
+    foreign key (userid) references USERS(userid),
+    CONSTRAINT UC_Filename UNIQUE (filename)
 );
 
 CREATE TABLE IF NOT EXISTS CREDENTIALS (

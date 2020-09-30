@@ -49,7 +49,7 @@ public class LoginPage {
 
 *        * The Thread.sleep method works every time and the tests succeed.
         */
-        try {Thread.sleep(2000);} catch (Exception e){System.out.println("LoginPage.login(): " + e.getMessage());}
+        try {Thread.sleep(1000);} catch (Exception e){System.out.println("LoginPage.login(): " + e.getMessage());}
         inputUsername.sendKeys(username);
         inputPassword.sendKeys(password);
         submitButton.click();
@@ -67,7 +67,7 @@ public class LoginPage {
         signUpLink.click();
     }
 
-    public boolean isPageLoaded(WebDriver driver) {
+    public boolean waitUntilLoaded(WebDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, 5000);
         WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(submitButton));
         return btn != null;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class NoteService {
+public class NoteService implements CloudStorageService {
 
     private NoteMapper noteMapper;
 
@@ -28,11 +28,14 @@ public class NoteService {
         return noteMapper.getNotes(user);
     }
 
+    public Note getNote(Integer noteId) { return noteMapper.getNote(noteId); }
+
     public boolean deleteNote(Note note){
         return noteMapper.delete(note) == 1;
     }
 
-    public int deleteAllNotes() {
-        return noteMapper.deleteAll();
+    @Override
+    public String getCollectionName() {
+        return "notes";
     }
 }
