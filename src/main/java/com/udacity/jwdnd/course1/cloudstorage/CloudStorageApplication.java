@@ -4,7 +4,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Special thanks to these websites for their resources:
+ * CloudStorageApplication - Udacity Java Web Developer Unit 1 Project: Super Duper Drive
+ *
+ * Author: David J. Dickinson
+ * Author Github: https://biscaboy.github.io
+ * Project Github:  https://github.com/biscaboy/cloudstorage
+ *
+ * This project is an exercise to acquaint the developer with the Spring Boot Enviornment
+ *
+ * Many thanks to my instructors and code reviewers at Udacity for the time and effort.
+ *
+ * Special thanks to Peter Zastoupil for developing the course.
+ *
+ * Thanks to these websites for their resources and to give them credit for their assistance:
  * Spring Documentation: https://docs.spring.io - multiple topics including:
  * 		Resources, ResourceLoader and JUnit Testing.
  * Himanshu Dahiya - Medium.com - MyBatis Annotations and Result Mapping
@@ -50,13 +62,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *  Javascript.info - Using the HTMLHttpRequest object - https://javascript.info/xmlhttprequest
  *  HowToDoInJava.com - Java Escape HTML - https://howtodoinjava.com/java/string/escape-html-encode-string/
  *  Nam Ha Minh - Java Servlet File Download - https://www.codejava.net/java-ee/servlet/java-servlet-download-file-example
+ *  Rita Łyczywek - Writing a good README - https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project
  *
  *  Udacity Knowledge Base Answers:
  *  	Eban D - Escaping quotes in Thymeleaf - https://knowledge.udacity.com/questions/275287
  * 		Utkarsh S - Generating a Secure Key - https://knowledge.udacity.com/questions/275248
  * 		Davide N - How to handle MaxUploadSizeExceededException - https://knowledge.udacity.com/questions/289021
  *
- * @TODO on home.html add message to click add button if there are no objects displayed.
  *
  */
 @SpringBootApplication

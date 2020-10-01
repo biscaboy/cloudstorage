@@ -4,18 +4,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ResultPage {
+public class ResultPage extends WaitablePage {
 
-    @FindBy(id = "success-msg")
+    private static final String SUCCESS_MESSAGE = "success-msg";
+    @FindBy(id = SUCCESS_MESSAGE)
     private WebElement successMessage;
 
-    @FindBy(id = "error-msg")
+    private static final String ERROR_MESSAGE = "error-msg";
+    @FindBy(id = ERROR_MESSAGE)
     private WebElement errorMessage;
 
-    @FindBy(id = "nav-link")
+    private static final String NAV_LINK = "nav-link";
+    @FindBy(id = NAV_LINK)
     private WebElement navLink;
 
     public ResultPage(WebDriver driver) {
@@ -26,18 +27,23 @@ public class ResultPage {
         return successMessage.isDisplayed();
     }
 
+    public boolean isSuccessMessage(WebDriver driver) {
+        return this.waitForElement(driver, SUCCESS_MESSAGE).isDisplayed();
+    }
+
     public boolean isErrorMessage() {
         return errorMessage.isDisplayed();
     }
+    public boolean isErrorMessage(WebDriver driver) {
+        return this.waitForElement(driver, ERROR_MESSAGE).isDisplayed();
+    }
 
-    public void clickNavLink() {
-        navLink.click();
+    public void clickNavLink(WebDriver driver) {
+        this.waitForElement(driver, NAV_LINK).click();
     }
 
     public boolean waitUntilLoaded(WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, 5000);
-        WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(navLink));
-        return btn != null;
+        return this.waitForElement(driver, NAV_LINK).isDisplayed();
     }
 
 }

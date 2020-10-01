@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,94 +11,103 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class HomePage {
+public class HomePage extends WaitablePage {
 
-    public static final String FILE_TAB = "File";
-    public static final String NOTE_TAB = "Note";
-    public static final String CREDENTIAL_TAB = "Credential";
-    public static final String ACTION_EDIT = "edit";
-    public static final String ACTION_DELETE = "delete";
-
-    @FindBy(id = "btn-logout")
+    private static final String BUTTON_LOGOUT = "btn-logout";
+    @FindBy(id = BUTTON_LOGOUT)
     private WebElement logoutButton;
 
-    @FindBy(id = "nav-files-tab")
+    private static final String NAV_FILES_TAB = "nav-files-tab";
+    @FindBy(id = NAV_FILES_TAB)
     private WebElement navFilesTab;
 
-    @FindBy(id = "nav-notes-tab")
+    private static final String NAV_NOTES_TAB = "nav-notes-tab";
+    @FindBy(id = NAV_NOTES_TAB)
     private WebElement navNotesTab;
 
-    @FindBy(id = "nav-credentials-tab")
+    private static final String NAV_CREDENTIALS_TAB = "nav-credentials-tab";
+    @FindBy(id = NAV_CREDENTIALS_TAB)
     private WebElement navCredentialsTab;
 
-    @FindBy(id = "btn-add-notes-modal")
+    private static final String BUTTON_ADD_NOTES_MODAL = "btn-add-notes-modal";
+    @FindBy(id = BUTTON_ADD_NOTES_MODAL)
     private WebElement addNotesModalButton;
 
-    @FindBy(id = "btn-add-file-modal")
-    private WebElement addFileModalButton;
-
-    @FindBy(id = "btn-add-credential-modal")
+    private static final String BUTTON_ADD_CREDENTIALS_MODAL = "btn-add-credential-modal";
+    @FindBy(id = BUTTON_ADD_CREDENTIALS_MODAL)
     private WebElement addCredentialModalButton;
 
-    @FindBy(id = "note-title")
+    private static final String INPUT_NOTE_TITLE = "note-title";
+    @FindBy(id = INPUT_NOTE_TITLE)
     private WebElement noteTitleInput;
 
-    @FindBy(id = "note-description")
+    private static final String INPUT_NOTE_DESCRIPTION = "note-description";
+    @FindBy(id = INPUT_NOTE_DESCRIPTION)
     private WebElement noteDescriptionInput;
 
-    @FindBy(id = "btn-save-note")
+    private static final String BUTTON_SAVE_NOTE = "btn-save-note";
+    @FindBy(id = BUTTON_SAVE_NOTE)
     private WebElement saveNoteButton;
 
-    @FindBy(id = "btn-save-credential")
+    private static final String BUTTON_SAVE_CREDENTIAL = "btn-save-credential";
+    @FindBy(id = BUTTON_SAVE_CREDENTIAL)
     private WebElement saveCredentialButton;
 
+    private static final String INPUT_CREDENTIAL_URL = "credential-url";
     @FindBy(id = "credential-url")
     private WebElement credentialUrlInput;
 
-    @FindBy(id = "credential-username")
+    private static final String INPUT_CREDENTIAL_USERNAME = "credential-username";
+    @FindBy(id = INPUT_CREDENTIAL_USERNAME)
     private WebElement credentialUsernameInput;
 
-    @FindBy(id = "credential-password")
+    private static final String INPUT_CREDENTIAL_PASSWORD = "credential-password";
+    @FindBy(id = INPUT_CREDENTIAL_PASSWORD)
     private WebElement credentialPasswordInput;
 
-    @FindBy(xpath = "//button[starts-with(@id,'btn-edit-note-')]")
+    private static final String BUTTONS_EDIT_NOTE = "//button[starts-with(@id,'btn-edit-note-')]";
+    @FindBy(xpath = BUTTONS_EDIT_NOTE)
     private List<WebElement> editNoteButtons;
 
-    @FindBy(xpath = "//a[starts-with(@id,'btn-delete-note-')]")
+    private static final String BUTTONS_DELETE_NOTE = "//a[starts-with(@id,'btn-delete-note-')]";
+    @FindBy(xpath = BUTTONS_DELETE_NOTE)
     private List<WebElement> deleteNoteButtons;
 
-    @FindBy(xpath = "//button[starts-with(@id,'btn-edit-file-')]")
+    private static final String BUTTONS_EDIT_FILE = "//button[starts-with(@id,'btn-edit-file-')]";
+    @FindBy(xpath = BUTTONS_EDIT_FILE)
     private List<WebElement> editFileButtons;
 
-    @FindBy(xpath = "//a[starts-with(@id,'btn-delete-file-')]")
+    private static final String BUTTONS_DELETE_FILE = "//a[starts-with(@id,'btn-delete-file-')]";
+    @FindBy(xpath = BUTTONS_DELETE_FILE)
     private List<WebElement> deleteFileButtons;
 
-    @FindBy(xpath = "//button[starts-with(@id,'btn-edit-credential-')]")
+    private static final String BUTTONS_EDIT_CREDENTIAL = "//button[starts-with(@id,'btn-edit-credential-')]";
+    @FindBy(xpath = BUTTONS_EDIT_CREDENTIAL)
     private List<WebElement> editCredentialButtons;
 
-    @FindBy(xpath = "//a[starts-with(@id,'btn-delete-credential-')]")
+    private static final String BUTTONS_DELETE_CREDENTIAL = "//a[starts-with(@id,'btn-delete-credential-')]";
+    @FindBy(xpath = BUTTONS_DELETE_CREDENTIAL)
     private List<WebElement> deleteCredentialButtons;
 
-    @FindBy(id = "noteTable")
+    private static final String NOTE_TABLE = "noteTable";
+    @FindBy(id = NOTE_TABLE)
     private WebElement noteTable;
 
-    @FindBy(id = "fileTable")
+    private static final String FILE_TABLE = "fileTable";
+    @FindBy(id = FILE_TABLE)
     private WebElement fileTable;
 
-    @FindBy(id = "credentialTable")
+    private static final String CREDENTIAL_TABLE = "credentialTable";
+    @FindBy(id = CREDENTIAL_TABLE)
     private WebElement credentialTable;
-
-    @FindBy(id ="note-row")
-    private List<WebElement> noteRows;
 
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 
-    public boolean waitUntilLoaded(WebDriver driver) {
-        WebDriverWait _wait = new WebDriverWait(driver, 5000);
-        WebElement _btn = _wait.until(ExpectedConditions.elementToBeClickable(addCredentialModalButton));
-        return _btn != null;
+    public boolean isLoaded(WebDriverWait wait) {
+        WebElement btn = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("nav-credentials")));
+        return btn != null;
     }
 
     public void saveNote(String title, String description) {
@@ -106,11 +116,17 @@ public class HomePage {
         saveNoteButton.click();
     }
 
-    public void saveCredential(String url, String username, String password) {
-        credentialUrlInput.sendKeys(url);
-        credentialUsernameInput.sendKeys(username);
-        credentialPasswordInput.sendKeys(password);
-        saveCredentialButton.click();
+    public void saveNote(WebDriver driver, String title, String description) {
+        waitForElement(driver, INPUT_NOTE_TITLE).sendKeys(title);
+        waitForElement(driver, INPUT_NOTE_DESCRIPTION).sendKeys(description);
+        waitForElement(driver, BUTTON_SAVE_NOTE).click();
+    }
+
+    public void saveCredential(WebDriver driver, String url, String username, String password) {
+        waitForElement(driver, INPUT_CREDENTIAL_URL).sendKeys(url);
+        waitForElement(driver, INPUT_CREDENTIAL_USERNAME).sendKeys(username);
+        waitForElement(driver, INPUT_CREDENTIAL_PASSWORD).sendKeys(password);
+        waitForElement(driver, BUTTON_SAVE_CREDENTIAL).click();
     }
 
     public String getLastAddedNoteEditButtonID(){
@@ -137,39 +153,80 @@ public class HomePage {
         return _lastNoteId;
 
     }
+
     public void clickNotesTab() {
         navNotesTab.click();
     }
 
-    public void clickCredentailsTab() {
+    public void clickNotesTab(WebDriver driver) {
+        waitForElement(driver, NAV_NOTES_TAB).click();
+    }
+
+    public void clickCredentialsTab() {
         navCredentialsTab.click();
     }
 
-    public void clickAddNoteButton() {
-        addNotesModalButton.click();
+    public void clickCredentialsTab(WebDriver driver) {
+        waitForElement(driver, NAV_CREDENTIALS_TAB).click();
+    }
+
+    public void clickAddNoteButton() { addNotesModalButton.click(); }
+
+    public void clickAddNoteButton(WebDriver driver) {
+        waitForElement(driver, BUTTON_ADD_NOTES_MODAL).click();
     }
 
     public void clickAddCredentialButton() {
         addCredentialModalButton.click();
     }
 
+    public void clickAddCredentialButton(WebDriver driver) {
+        waitForElement(driver, BUTTON_ADD_CREDENTIALS_MODAL).click();
+    }
+
     public void clickEditNoteButton(String id) {
         clickButton(editNoteButtons, id);
+    }
+
+    public void clickEditNoteButton(WebDriver driver, String id) {
+        clickButton(driver, editNoteButtons, BUTTONS_EDIT_NOTE, id);
     }
 
     public void clickDeleteNoteButton(String id) {
         clickButton(deleteNoteButtons, id);
     }
 
+    public void clickDeleteNoteButton(WebDriver driver, String id) {
+        clickButton(driver, deleteNoteButtons, BUTTONS_DELETE_NOTE, id);
+    }
+
     public void clickEditCredentialButton(String id) {
         clickButton(editCredentialButtons, id);
+    }
+
+    public void clickEditCredentialButton(WebDriver driver, String id) {
+        clickButton(driver, editCredentialButtons, BUTTONS_EDIT_CREDENTIAL, id);
     }
 
     public void clickDeleteCredentialButton(String id) {
         clickButton(deleteCredentialButtons, id);
     }
 
+    public void clickDeleteCredentialButton(WebDriver driver, String id) {
+        clickButton(driver, deleteCredentialButtons, BUTTONS_DELETE_CREDENTIAL, id);
+    }
+
     private void clickButton(List<WebElement> buttons, String id) {
+        for (WebElement _button : buttons) {
+            if (_button.getAttribute("id").equals(id)) {
+                _button.click();
+                break;
+            }
+        }
+    }
+
+    //@todo:  Solve this problem!  how to get resolution on each button and wait.  Do I need this???????
+    private void clickButton(WebDriver driver, List<WebElement> buttons, String buttonsElementName, String id) {
         for (WebElement _button : buttons) {
             if (_button.getAttribute("id").equals(id)) {
                 _button.click();
@@ -201,6 +258,10 @@ public class HomePage {
 
     public void clickLogoutButton() {
         logoutButton.click();
+    }
+
+    public void clickLogoutButton(WebDriverWait wait) {
+        wait.until(ExpectedConditions.elementToBeClickable(logoutButton)).click();
     }
 
 }

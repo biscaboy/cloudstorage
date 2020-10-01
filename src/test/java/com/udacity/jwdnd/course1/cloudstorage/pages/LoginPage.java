@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,24 +8,30 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LoginPage {
+public class LoginPage extends WaitablePage {
 
-    @FindBy(id = "inputUsername")
+    private static final String INPUT_USERNAME = "inputUsername";
+    @FindBy(id = INPUT_USERNAME)
     private WebElement inputUsername;
 
-    @FindBy(id = "inputPassword")
+    private static final String INPUT_PASSWORD = "inputPassword";
+    @FindBy(id = INPUT_PASSWORD)
     private WebElement inputPassword;
 
-    @FindBy(id = "submit-button")
+    private static final String SUBMIT_BUTTON = "submit-button";
+    @FindBy(id = SUBMIT_BUTTON)
     private WebElement submitButton;
 
-    @FindBy(id = "msg-logged-out")
+    private static final String MESSAGE_LOGGED_OUT = "msg-logged-out";
+    @FindBy(id = MESSAGE_LOGGED_OUT)
     private WebElement msgLoggedOut;
 
-    @FindBy(id = "msg-invalid")
+    private static final String MESSAGE_INVALID = "msg-invalid";
+    @FindBy(id = MESSAGE_INVALID)
     private WebElement msgInvalid;
 
-    @FindBy(id = "sign-up-link")
+    private static final String SIGN_UP_LINK = "sign-up-link";
+    @FindBy(id = SIGN_UP_LINK)
     private WebElement signUpLink;
 
     public LoginPage(WebDriver driver) {
@@ -32,38 +39,36 @@ public class LoginPage {
     }
 
     public void login(WebDriver driver, String username, String password) {
-        /* @TODO Find a WebDriverWait method to make the login page wait to load completely.
-         * Tried to use a WebDriverWait, but not matter what I waited for nothing paused the page enough.
-         * The problem is that the inputUsername field is not loading before the .sendKeys() method executes.
-         *
-         * Tried this:
-        WebDriverWait wait = new WebDriverWait(driver, 1);
-        wait.until(webDriver -> webDriver.findElement(By.id("inputUsername")));
+        waitForElement(driver, INPUT_USERNAME).sendKeys(username);
+        waitForElement(driver, INPUT_PASSWORD).sendKeys(password);
+        waitForElement(driver, SUBMIT_BUTTON).click();
+    }
 
-         * also tried this variation and others similar:
-        WebElement elemUsername = wait.until(ExpectedConditions.elementToBeClickable(inputUsername));
-        elemUsername.sendKeys(username);
-
-*        * The Thread.sleep method works every time and the tests succeed.
-        */
-        try {Thread.sleep(1000);} catch (Exception e){System.out.println("LoginPage.login(): " + e.getMessage());}
+    public void login(String username, String password) {
         inputUsername.sendKeys(username);
         inputPassword.sendKeys(password);
         submitButton.click();
     }
 
+    public boolean isInvalidUserIdOrPassword(WebDriver driver) {
+        return waitForElement(driver, MESSAGE_INVALID).isDisplayed();
+    }
+
     public boolean isInvalidUserIdOrPassword() {
-        return msgInvalid != null;
+        String msg = msgInvalid.getTagName();
+        return msg != null;
+    }
+
+    public void clickSignUpLink(WebDriver driver) {
+        waitForElement(driver, SIGN_UP_LINK).click();
     }
 
     public void clickSignUpLink() {
         signUpLink.click();
     }
 
-    public boolean waitUntilLoaded(WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, 5000);
-        WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(submitButton));
-        return btn != null;
+    public boolean isLoaded(WebDriver driver) {
+        return waitForElement(driver, SUBMIT_BUTTON).isDisplayed();
     }
 
 }

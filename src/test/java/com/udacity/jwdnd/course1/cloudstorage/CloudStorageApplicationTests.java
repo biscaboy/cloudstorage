@@ -9,9 +9,14 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,7 +27,8 @@ class CloudStorageApplicationTests {
 	private int port;
 
 	private WebDriver driver;
-	private static String BASE_URL = "http://localhost:";
+	//private WebDriverWait wait;
+	private static final String BASE_URL = "http://localhost:";
 
 	private SignupPage signupPage;
 	private LoginPage loginPage;
@@ -37,6 +43,8 @@ class CloudStorageApplicationTests {
 	@BeforeEach
 	public void beforeEach() {
 		this.driver = new ChromeDriver();
+		//this.wait = new WebDriverWait(driver, 20);
+		//driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 		driver.get(BASE_URL + port + "/signup");
 		signupPage = new SignupPage(driver);
 		loginPage = new LoginPage(driver);
@@ -70,14 +78,18 @@ class CloudStorageApplicationTests {
 	@Test
 	@DisplayName("Sign up a new user.")
 	public void testRegisterUser() {
-		signupPage.signUp("John", "Doe", "jdoe", "12345678");
-		assertNotNull(signupPage.getSuccessMsg(driver));
+		WebDriverWait wait = new WebDriverWait(driver, 100);
+		SignupPage signupPage = new SignupPage(driver);
+		signupPage.signUp(wait,"John", "Doe", "jdoe", "12345678");
+		assertNotNull(signupPage.getSuccessMsg(wait));
 	}
 
 	@Test
 	@DisplayName("Click the back to login link")
 	public void testClickBackLink() {
-		signupPage.clickGoBackLink();
+		WebDriverWait wait = new WebDriverWait(driver, 100);
+		SignupPage signupPage = new SignupPage(driver);
+		signupPage.clickGoBackLink(wait);
 		assertEquals("Login", driver.getTitle());
 	}
 
@@ -85,10 +97,9 @@ class CloudStorageApplicationTests {
 	@DisplayName("Sign up and click continue to Login page.")
 	public void testSignupAndContinue() {
 		signupPage.signUp("Jill", "Doe", "jilld", "12345678");
-		try {Thread.sleep(2000);} catch (Exception e){System.out.println(e.getMessage());}
-		assertNotNull(signupPage.getSuccessMsg(driver));
-		signupPage.clickContinueLink();
-		try {Thread.sleep(2000);} catch (Exception e){System.out.println(e.getMessage());}
+		assertNotNull(signupPage.getSuccessMsg());
+		signupPage.clickContinueLink(driver);
+		try{Thread.sleep(1000);}catch(Exception e){};
 		assertEquals("Login", driver.getTitle());
 	}
 
@@ -97,18 +108,15 @@ class CloudStorageApplicationTests {
 	public void testLogin() {
 		String username = "jackd";
 		String password = "12345678";
+
 		signupPage.signUp("Jack", "Doe", username, password);
-		try {Thread.sleep(1000);} catch (Exception e){System.out.println(e.getMessage());}
-		// calls to the wait.until methods on the Page classes are not reliable/do not work. Commenting out for later investigation.
-		//assertTrue(signupPage.waitUntilLoaded(driver), "The signup page did not load after submission.");
-		signupPage.clickContinueLink();
-		try {Thread.sleep(1000);} catch (Exception e){System.out.println(e.getMessage());}
-		assertEquals("Login", driver.getTitle());
-		//assertEquals(loginPage.waitUntilLoaded(driver), "Failed to redirect to the login page.");
-		try {Thread.sleep(1000);} catch (Exception e){System.out.println(e.getMessage());}
-		loginPage.login(driver, username, password);
-		//assertTrue(homePage.waitUntilLoaded(driver), "Failed to redirect to the home page.");
-		try {Thread.sleep(1000);} catch (Exception e){System.out.println(e.getMessage());}
+
+		driver.get(BASE_URL + port + "/login");
+
+		loginPage.login(username, password);
+
+		driver.get(BASE_URL + port + "/home");
+
 		assertEquals("Home", driver.getTitle());
 	}
 
@@ -132,9 +140,9 @@ class CloudStorageApplicationTests {
 	@DisplayName("Attempt to login without signing up.")
 	public void testNonAuthenticatedLogin() {
 		String username = "jackd";
-		String password = "1234";
+		String password = "12341234";
 		driver.get(BASE_URL + port + "/login");
-		loginPage.login(driver, username, password);
+		loginPage.login(username, password);
 		assertTrue(loginPage.isInvalidUserIdOrPassword());
 	}
 
@@ -144,20 +152,10 @@ class CloudStorageApplicationTests {
 		String username = "jlogout";
 		String password = "12345678";
 		signupPage.signUp("Jack", "Smoe", username, password);
-		// calls to the wait.until methods on the Page classes are not reliable/do not work. Commenting out for later investigation.
-		//signupPage.waitUntilLoaded(driver);
-		try {Thread.sleep(1000);} catch (Exception e){System.out.println(e.getMessage());}
-		signupPage.clickContinueLink();
-		//assertTrue(loginPage.waitUntilLoaded(driver), "Failed to redirect to login page from signup.");
-		try {Thread.sleep(1000);} catch (Exception e){System.out.println(e.getMessage());}
-		assertEquals("Login", driver.getTitle());
-		loginPage.login(driver, username, password);
-		//assertTrue(homePage.waitUntilLoaded(driver), "Failed to redirect to the home page.");
-		try {Thread.sleep(1000);} catch (Exception e){System.out.println(e.getMessage());}
-		assertEquals("Home", driver.getTitle());
+		driver.get(BASE_URL + port + "/login");
+		loginPage.login(username, password);
+		driver.get(BASE_URL + port + "/home");
 		homePage.clickLogoutButton();
-		//assertTrue(loginPage.waitUntilLoaded(driver), "Failed to redirect to the login page after logout.");
-		try {Thread.sleep(1000);} catch (Exception e){System.out.println(e.getMessage());}
 		assertEquals("Login", driver.getTitle());
 	}
 
@@ -173,19 +171,21 @@ class CloudStorageApplicationTests {
 		try {
 			signupPage.signUp("Joe", "Note", "note1", "12345678");
 			driver.get(BASE_URL + this.port + "/login");
-			loginPage.login(driver, "note1", "12345678");
-			Thread.sleep(1000);
-			homePage.clickNotesTab();
-			Thread.sleep(1000);
-			homePage.clickAddNoteButton();
-			Thread.sleep(1000);
-			homePage.saveNote(testTitle, testDescription);
-			Thread.sleep(1000);
-			bSuccessMsg = resultPage.isSuccessMessage();
-			resultPage.clickNavLink();
-			Thread.sleep(1000);
-			resultTitle = driver.findElement(By.xpath("//*[text()='" + testTitle + "']")).getText();
-			resultDescription = driver.findElement(By.xpath("//*[text()='" + testDescription + "']")).getText();
+			loginPage.login("note1", "12345678");
+			driver.get(BASE_URL + this.port + "/home");
+			homePage.clickNotesTab(driver);
+			homePage.clickAddNoteButton(driver);
+			homePage.saveNote(driver, testTitle, testDescription);
+			bSuccessMsg = resultPage.isSuccessMessage(driver);
+			resultPage.clickNavLink(driver);
+			driver.get(BASE_URL + this.port + "/home");
+			homePage.clickNotesTab(driver);
+			WebElement titleEl = new WebDriverWait(driver, 10)
+					.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[text()='" + testTitle + "']"))));
+			WebElement descEl = new WebDriverWait(driver, 10)
+					.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[text()='" + testDescription + "']"))));
+			resultTitle = titleEl.getText();
+			resultDescription = descEl.getText();
 		} catch (Exception e) {
 			fail("Exception in testSaveNote: " + e.getMessage());
 		}
@@ -211,23 +211,26 @@ class CloudStorageApplicationTests {
 			signupPage.signUp("Joe", "Note", "note1", "12345678");
 			driver.get(BASE_URL + this.port + "/login");
 			loginPage.login(driver, "note1", "12345678");
+			driver.get(BASE_URL + port + "/home");
+			homePage.clickNotesTab(driver);
+			homePage.clickAddNoteButton(driver);
+			homePage.saveNote(driver, testTitle, testDescription);
+			Thread.sleep(1000);
+			driver.get(BASE_URL + port + "/home");
 			Thread.sleep(1000);
 			homePage.clickNotesTab();
-			Thread.sleep(1000);
-			homePage.clickAddNoteButton();
-			Thread.sleep(1000);
-			homePage.saveNote(testTitle, testDescription);
-			Thread.sleep(1000);
-			resultPage.clickNavLink();
 			// get the id of the last item in the list.
 			Thread.sleep(1000);
 			String buttonId = homePage.getLastAddedNoteEditButtonID();
+			Thread.sleep(1000);
 			homePage.clickEditNoteButton(buttonId);
+			homePage.saveNote(driver, editTitle, editDescription);
+			bSuccessMsg = resultPage.isSuccessMessage(driver);
+			resultPage.clickNavLink(driver);
 			Thread.sleep(1000);
-			homePage.saveNote(editTitle, editDescription);
+			driver.get(BASE_URL + port + "/home");
 			Thread.sleep(1000);
-			bSuccessMsg = resultPage.isSuccessMessage();
-			resultPage.clickNavLink();
+			homePage.clickNotesTab(driver);
 			Thread.sleep(1000);
 			resultTitle = driver.findElement(By.xpath("//*[text()='" + expectedTitle + "']")).getText();
 			resultDescription = driver.findElement(By.xpath("//*[text()='" + expectedDescription + "']")).getText();
@@ -249,7 +252,9 @@ class CloudStorageApplicationTests {
 		boolean bSuccessMsg = false;
 		boolean bSuccessDelete = false;
 		try {
-			signupPage.signUp("Joe", "Note", "delete1", "12345678");
+			WebDriverWait wait = new WebDriverWait(driver, 100);
+			SignupPage signupPage = new SignupPage(driver);
+			signupPage.signUp(wait, "Joe", "Note", "delete1", "12345678");
 			driver.get(BASE_URL + this.port + "/login");
 			loginPage.login(driver, "delete1", "12345678");
 			Thread.sleep(1000);
@@ -259,7 +264,7 @@ class CloudStorageApplicationTests {
 			Thread.sleep(1000);
 			homePage.saveNote(testTitle, testDescription);
 			Thread.sleep(1000);
-			resultPage.clickNavLink();
+			resultPage.clickNavLink(driver);
 			Thread.sleep(1000);
 			resultTitle = driver.findElement(By.xpath("//*[text()='" + testTitle + "']")).getText();
 			resultDescription = driver.findElement(By.xpath("//*[text()='" + testDescription + "']")).getText();
@@ -267,7 +272,7 @@ class CloudStorageApplicationTests {
 			homePage.clickDeleteNoteButton(buttonId);
 			Thread.sleep(1000);
 			bSuccessMsg = resultPage.isSuccessMessage();
-			resultPage.clickNavLink();
+			resultPage.clickNavLink(driver);
 			Thread.sleep(1000);
 			bSuccessDelete = homePage.isAnyNoteDisplayed();
 		} catch (Exception e) {
@@ -286,25 +291,26 @@ class CloudStorageApplicationTests {
 		String testUrl = "http://redfish.org";
 		String testUsername = "Bingo";
 		String testPassword = "big2BingBing";
-		String encryptedTestPassword = "";
 		boolean bResultUrl = false;
 		boolean bResultUsername = false;
 		String resultPassword = null;
 		boolean bSuccessMsg = false;
 		boolean bPasswordEncrypted = true;
+		WebDriverWait wait = new WebDriverWait(driver, 100);
+		SignupPage signupPage = new SignupPage(driver);
 		try {
-			signupPage.signUp("Joe", "Cred", "cred1", "12345678");
+			signupPage.signUp(wait, "Joe", "Cred", "cred1", "12345678");
 			driver.get(BASE_URL + this.port + "/login");
 			loginPage.login(driver, "cred1", "12345678");
 			Thread.sleep(1000);
-			homePage.clickCredentailsTab();
+			homePage.clickCredentialsTab();
 			Thread.sleep(1000);
 			homePage.clickAddCredentialButton();
 			Thread.sleep(1000);
-			homePage.saveCredential(testUrl, testUsername, testPassword);
+			homePage.saveCredential(driver, testUrl, testUsername, testPassword);
 			Thread.sleep(1000);
 			bSuccessMsg = resultPage.isSuccessMessage();
-			resultPage.clickNavLink();
+			resultPage.clickNavLink(driver);
 			Thread.sleep(1000);
 			bResultUrl = driver.findElement(By.xpath("//*[text()='" + testUrl + "']")).isDisplayed();
 			bResultUsername = driver.findElement(By.xpath("//*[text()='" + testUsername + "']")).isDisplayed();
@@ -342,27 +348,29 @@ class CloudStorageApplicationTests {
 		boolean bResultUsername = false;
 		String resultPassword = null;
 		boolean bSuccessMsg = false;
+		WebDriverWait wait = new WebDriverWait(driver, 100);
+		SignupPage signupPage = new SignupPage(driver);
 		try {
-			signupPage.signUp("Joe", "Cred", "jcred2", "12345678");
+			signupPage.signUp(wait, "Joe", "Cred", "jcred2", "12345678");
 			driver.get(BASE_URL + this.port + "/login");
 			loginPage.login(driver, "jcred2", "12345678");
 			Thread.sleep(1000);
-			homePage.clickCredentailsTab();
+			homePage.clickCredentialsTab();
 			Thread.sleep(1000);
 			homePage.clickAddCredentialButton();
 			Thread.sleep(1000);
-			homePage.saveCredential(testUrl, testUsername, testPassword);
+			homePage.saveCredential(driver, testUrl, testUsername, testPassword);
 			Thread.sleep(1000);
-			resultPage.clickNavLink();
+			resultPage.clickNavLink(driver);
 			// get the id of the last item in the list.
 			Thread.sleep(1000);
 			String buttonId = homePage.getLastAddedCredentialEditButtonID();
 			homePage.clickEditCredentialButton(buttonId);
 			Thread.sleep(1000);
-			homePage.saveCredential(editUrl, editUsername, editPassword);
+			homePage.saveCredential(driver, editUrl, editUsername, editPassword);
 			Thread.sleep(1000);
 			bSuccessMsg = resultPage.isSuccessMessage();
-			resultPage.clickNavLink();
+			resultPage.clickNavLink(driver);
 			Thread.sleep(1000);
 			bResultUrl = driver.findElement(By.xpath("//*[text()='" + expectedUrl + "']")).isDisplayed();
 			bResultUsername = driver.findElement(By.xpath("//*[text()='" + expectedUsername + "']")).isDisplayed();
@@ -380,31 +388,33 @@ class CloudStorageApplicationTests {
 
 	@Test
 	@DisplayName("Delete a credential.")
-	public void testDeleteCredentail() {
+	public void testDeleteCredential() {
 		String testUrl = "http://deleteme.info";
 		String testUsername = "Goner12";
 		String testPassword = "zAPMe-n0w";
 		boolean bSuccessMsg = false;
 		boolean bSuccessDelete = false;
+		WebDriverWait wait = new WebDriverWait(driver, 100);
+		SignupPage signupPage = new SignupPage(driver);
 		try {
-			signupPage.signUp("Joe", "Cred", "jcred3", "12345678");
+			signupPage.signUp(wait, "Joe", "Cred", "jcred3", "12345678");
 			driver.get(BASE_URL + this.port + "/login");
 			loginPage.login(driver, "jcred3", "12345678");
 			Thread.sleep(1000);
-			homePage.clickCredentailsTab();
+			homePage.clickCredentialsTab();
 			Thread.sleep(1000);
 			homePage.clickAddCredentialButton();
 			Thread.sleep(1000);
-			homePage.saveCredential(testUrl, testUsername, testPassword);
+			homePage.saveCredential(driver, testUrl, testUsername, testPassword);
 			Thread.sleep(1000);
-			resultPage.clickNavLink();
+			resultPage.clickNavLink(driver);
 			// get the id of the last item in the list.
 			Thread.sleep(1000);
 			String buttonId = homePage.getLastAddedCredentialDeleteButtonID();
 			homePage.clickDeleteCredentialButton(buttonId);
 			Thread.sleep(1000);
 			bSuccessMsg = resultPage.isSuccessMessage();
-			resultPage.clickNavLink();
+			resultPage.clickNavLink(driver);
 			Thread.sleep(1000);
 			bSuccessDelete = homePage.isAnyCredentialDisplayed();
 		} catch (Exception e) {
