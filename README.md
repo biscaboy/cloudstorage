@@ -141,19 +141,16 @@ provided in the Maven project provided by the instructors.
 I found that this code presented multiple places as a working example
 would not cause the driver to wait.
 
-`
 
     WebDriverWait wait = new WebDriverWait(driver, 3);
     
     wait.until(webDriver -> webDriver.findElement(By.id("some-element")));
 
-`
 
 Passing WebElements created by the PageFactory worked but the 
 WebDriver again would not wait, but immediately returned and 
 not solving race error situations.  
 
-`
 
     WebDriverWait wait = new WebDriverWait(driver, 10);
 
@@ -161,13 +158,11 @@ not solving race error situations.
 
     elemUsername.sendKeys("xyz");
 
-`
 
 What worked for me was to include a new call to `driver.findElement(By.x())` 
 inside the ExpectedConditions function to provide the proper DOM context for
 the wait object to call against.  This is the code that finally worked for me:
 
-`
 
     WebDriverWait wait = new WebDriverWait(driver, 10);
     
@@ -176,9 +171,8 @@ the wait object to call against.  This is the code that finally worked for me:
     
     el.sendKeys("abc");
     
-`
 
-The `ExpectedCondition.visibilityOf` was the most consistent method 
+The `ExpectedCondition.visibilityOf()` was the most consistent method 
 for the tests in this project as others occasionally failed with 
 `element not accessable` errors.
 
