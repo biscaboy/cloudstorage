@@ -1,5 +1,5 @@
 # Super*Duper*Drive Cloud Storage
-#####Udacity Java Web Developer Nanodegree Unit 2 Final Project
+Udacity Java Web Developer Nanodegree Unit 2 Final Project
 
 
 This project is an exercise to acquaint the developer with 
@@ -16,7 +16,7 @@ the IntelliJ IDE.
 * [Project Requirements](#requirements)
 * [Setup](#setup)
 * [Resources](#resources)
-* [Special Thanks](#special-thanks)
+* [Thanks](#thanks)
 
 ## Requirements
 The [project's rubric](https://github.com/udacity/nd035-c1-spring-boot-basics-project-starter)
@@ -32,15 +32,15 @@ The instructors provide the student developer with front-end
 html files, a hashing service class, an encryption service class and
 a Spring Boot framework using Maven.
 
-##Setup 
-#### Launch
+## Setup 
+### Launch
 The project requires IntelliJ IDE and has only tested in that development environment.
 The Maven project file (pom.xml) provides all dependencies.
 The main() method is found in:
 
 `cloudstorage/src/main/java/com/udacity/jwdnd/course1/cloudstorage/CloudStorageApplication.java`
 
-####JUnit Tests 
+### JUnit Tests 
 Integration tests on Chrome can be found here:
 
 `
@@ -130,7 +130,7 @@ and educators who generously posted documentation, solutions and tutorials onlin
     * Advanced Encryption Standard - https://en.wikipedia.org/wiki/Advanced_Encryption_Standard
 
 
-##Note on Selenium
+## Note on Selenium
 I found the most difficult aspect of this assignment to be working with 
 the Selenium WebDriver, WebDriverWait and ExpectedConditions classes.  In the course
 the PageFactory pattern was presented, but as I worked though my solution
@@ -182,7 +182,7 @@ The `ExpectedCondition.visibilityOf` was the most consistent method
 for the tests in this project as others occasionally failed with 
 `element not accessable` errors.
 
-##Special Thanks
+## Thanks
 Many thanks to my instructors and code reviewers at 
 [Udacity](http://udacity.com) for the time and effort.
 Special thanks to [Peter Zastoupil](https://github.com/resisttheurge) 
