@@ -1,9 +1,21 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
+/**
+ * Simple interface for Model objects used to
+ * make error and success messages easier to manage
+ * See the ValidationService and ResponsePackingService.
+ */
 public interface CloudStorageModel {
 
-    public String printName();
+    /**
+     * The name of the implementing class for messaging.
+     * @return logical functioning name of the class eg. file, credential, note, etc.
+     */
+    String printName();
 
-    public Integer getUserId();
+    /**
+     * @return the id of the owner of this object.
+     */
+    Integer getUserId();
 
 }

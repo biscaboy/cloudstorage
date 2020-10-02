@@ -1,12 +1,9 @@
 package com.udacity.jwdnd.course1.cloudstorage.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage extends WaitablePage {
 
@@ -51,7 +48,7 @@ public class LoginPage extends WaitablePage {
     }
 
     public boolean isInvalidUserIdOrPassword(WebDriver driver) {
-        return waitForElement(driver, MESSAGE_INVALID).isDisplayed();
+        return isElementDisplayed(driver, MESSAGE_INVALID);
     }
 
     public boolean isInvalidUserIdOrPassword() {
@@ -68,7 +65,7 @@ public class LoginPage extends WaitablePage {
     }
 
     public boolean isLoaded(WebDriver driver) {
-        return waitForElement(driver, SUBMIT_BUTTON).isDisplayed();
+        return isElementDisplayed(driver, SUBMIT_BUTTON);
     }
 
 }

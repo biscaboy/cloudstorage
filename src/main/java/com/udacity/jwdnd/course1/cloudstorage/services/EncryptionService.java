@@ -2,7 +2,6 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.*;
@@ -11,7 +10,6 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Base64;
 
 @Service
@@ -68,8 +66,6 @@ public class EncryptionService {
      * This method was copied from a Udacity Knowledge base answer:
      *      by Utkarsh S - Problem with password decryption.
      *      https://knowledge.udacity.com/questions/275248
-     *
-     * @TODO  Study to understand why this approach works.
      *
      * @return secure key for use with encryptValue and decryptValue methods
      */

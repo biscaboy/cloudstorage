@@ -1,6 +1,5 @@
 package com.udacity.jwdnd.course1.cloudstorage.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -105,9 +104,8 @@ public class HomePage extends WaitablePage {
         PageFactory.initElements(driver, this);
     }
 
-    public boolean isLoaded(WebDriverWait wait) {
-        WebElement btn = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("nav-credentials")));
-        return btn != null;
+    public boolean isLoaded(WebDriver driver) {
+        return isElementDisplayed(driver, BUTTON_LOGOUT);
     }
 
     public void saveNote(String title, String description) {
@@ -189,7 +187,7 @@ public class HomePage extends WaitablePage {
     }
 
     public void clickEditNoteButton(WebDriver driver, String id) {
-        clickButton(driver, editNoteButtons, BUTTONS_EDIT_NOTE, id);
+        clickButton(driver, id);
     }
 
     public void clickDeleteNoteButton(String id) {
@@ -197,7 +195,7 @@ public class HomePage extends WaitablePage {
     }
 
     public void clickDeleteNoteButton(WebDriver driver, String id) {
-        clickButton(driver, deleteNoteButtons, BUTTONS_DELETE_NOTE, id);
+        clickButton(driver, id);
     }
 
     public void clickEditCredentialButton(String id) {
@@ -205,7 +203,7 @@ public class HomePage extends WaitablePage {
     }
 
     public void clickEditCredentialButton(WebDriver driver, String id) {
-        clickButton(driver, editCredentialButtons, BUTTONS_EDIT_CREDENTIAL, id);
+        clickButton(driver, id);
     }
 
     public void clickDeleteCredentialButton(String id) {
@@ -213,7 +211,7 @@ public class HomePage extends WaitablePage {
     }
 
     public void clickDeleteCredentialButton(WebDriver driver, String id) {
-        clickButton(driver, deleteCredentialButtons, BUTTONS_DELETE_CREDENTIAL, id);
+        clickButton(driver, id);
     }
 
     private void clickButton(List<WebElement> buttons, String id) {
@@ -225,43 +223,48 @@ public class HomePage extends WaitablePage {
         }
     }
 
-    //@todo:  Solve this problem!  how to get resolution on each button and wait.  Do I need this???????
-    private void clickButton(WebDriver driver, List<WebElement> buttons, String buttonsElementName, String id) {
-        for (WebElement _button : buttons) {
-            if (_button.getAttribute("id").equals(id)) {
-                _button.click();
-                break;
-            }
-        }
+    private void clickButton(WebDriver driver, String id) {
+        waitForElement(driver, id).click();
     }
 
     public boolean isAnyNoteDisplayed() {
         return isElementDisplayed(noteTable);
     }
 
+    public boolean isAnyNoteDisplayed(WebDriver driver) {
+        return isElementDisplayed(driver, NOTE_TABLE);
+    }
+
     public boolean isAnyCredentialDisplayed() {
         return isElementDisplayed(credentialTable);
     }
 
-    private boolean isElementDisplayed(WebElement elem) {
-        try {
-            elem.isDisplayed();
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+    public boolean isAnyCredentialDisplayed(WebDriver driver) {
+        return isElementDisplayed(driver, CREDENTIAL_TABLE);
     }
 
     public String getDecryptedPassword() {
         return credentialPasswordInput.getAttribute("value");
     }
 
+    public String getDecryptedPassword(WebDriver driver) {
+        return waitForElement(driver, INPUT_CREDENTIAL_PASSWORD).getAttribute("value");
+    }
+
     public void clickLogoutButton() {
         logoutButton.click();
     }
 
-    public void clickLogoutButton(WebDriverWait wait) {
-        wait.until(ExpectedConditions.elementToBeClickable(logoutButton)).click();
+    public void clickLogoutButton(WebDriver driver) {
+        waitForElement(driver, BUTTON_LOGOUT).click();
+    }
+
+    private boolean isElementDisplayed(WebElement elem) {
+        try {
+            return elem.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
 }

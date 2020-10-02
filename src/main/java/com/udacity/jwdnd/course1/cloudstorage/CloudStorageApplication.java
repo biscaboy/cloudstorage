@@ -19,6 +19,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Thanks to these websites for their resources and to give them credit for their assistance:
  * Spring Documentation: https://docs.spring.io - multiple topics including:
  * 		Resources, ResourceLoader and JUnit Testing.
+ * Selenium.dev - Multiple topics including Waits - https://www.selenium.dev/documentation/en/webdriver/waits/
  * Himanshu Dahiya - Medium.com - MyBatis Annotations and Result Mapping
  * 		- https://medium.com/@hsvdahiya/mybatis-annotations-result-mapping-spring-79944ff74b84
  * Baeldung: https://www.baeldung.com - multiple topics on Spring Boot
@@ -49,12 +50,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *		Maarten Bodewes - isBlank() vs isEmpty() - https://stackoverflow.com/questions/23419087/stringutils-isblank-vs-string-isempty
  *		Moritz Petersen - Conver byte array to download file - https://stackoverflow.com/questions/13989215/how-to-convert-a-byte-into-a-file-with-a-download-dialog-box
  *		Christopher Bales - inserting a string into an HTML Input element - https://stackoverflow.com/questions/7331146/how-to-get-text-of-single-input-tag
+ * 		Hari Reddy - Correct way to focus on elements using Selenium WebDriver - https://stackoverflow.com/questions/11337353/correct-way-to-focus-an-element-in-selenium-webdriver-using-java
  *
+ * Contributors to StackExchange:
+ *		Chris Liston - Selenium Waits - https://sqa.stackexchange.com/questions/39348/unable-to-enter-text-in-twitter-using-selenium-webdriver
  *	Junit 5 Doc - https://junit.org/junit5/
  *	Oracle Java SE 8 Javadoc - https://docs.oracle.com/javase/8/docs/api/overview-summary.html
  *  MyBatis-Spring - http://mybatis.org/spring/
  *  Spring Framework Guru - Using @RequestMapping - https://springframework.guru/spring-requestmapping-annotation/
  *  Guru99 - XPath in Selenium Web Driver - https://www.guru99.com/xpath-selenium.html
+ *  	   - Implicit, Explicit & Fluent Waits in Selenium - https://www.guru99.com/implicit-explicit-waits-selenium.html
  * 	The Art of the Web - Html5 Validation Examples - https://www.the-art-of-web.com/html/html5-form-validation/
  *  Useful Angle - Validate URL - https://usefulangle.com/post/36/javascript-validate-url-form-input-field-without-regex
  *	Arul Rai - WebSparrow.org - uploading multi-part files - https://www.websparrow.org/spring/spring-boot-rest-api-file-upload-save-example
@@ -63,12 +68,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *  HowToDoInJava.com - Java Escape HTML - https://howtodoinjava.com/java/string/escape-html-encode-string/
  *  Nam Ha Minh - Java Servlet File Download - https://www.codejava.net/java-ee/servlet/java-servlet-download-file-example
  *  Rita Łyczywek - Writing a good README - https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project
+ *	GitHub Doc - Markdown - https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+ *	TonyD at Google Groups - Explicit Waits with PageFoctory - https://groups.google.com/g/webdriver/c/7AGczMaV578?pli=1
+ *  All Selenium - How to work with expected conditions - http://allselenium.info/work-with-expected-conditions-explicit-waits/
+ *  Ipseeta Priyadarshini - Anonymous fucntions in Java - https://hashnode.com/post/anonymous-functions-in-java-explained-cj1opkbj8000sml53bsq6r6cj
+ *
  *
  *  Udacity Knowledge Base Answers:
  *  	Eban D - Escaping quotes in Thymeleaf - https://knowledge.udacity.com/questions/275287
  * 		Utkarsh S - Generating a Secure Key - https://knowledge.udacity.com/questions/275248
  * 		Davide N - How to handle MaxUploadSizeExceededException - https://knowledge.udacity.com/questions/289021
- *
+ *		Daniel Brinzoi - https://github.com/danielbrinzoi - Fellow student. Reviewed his Junit tests while researching
+ *							why the ExpectedConditions were always returning untrue conditions.
  *
  */
 @SpringBootApplication

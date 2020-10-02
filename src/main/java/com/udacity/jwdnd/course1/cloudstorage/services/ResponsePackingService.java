@@ -5,6 +5,13 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+/**
+ * This service prepares responses to the template view layer
+ * keeping responses consistent across all CloudStorageService objects.
+ *
+ * The Model will be packed with collections of objects, messages or errors
+ * and returned for display on the Result view.
+ */
 @NoArgsConstructor
 @Service
 public class ResponsePackingService {

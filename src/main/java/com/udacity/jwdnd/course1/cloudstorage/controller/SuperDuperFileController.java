@@ -55,7 +55,6 @@ public class SuperDuperFileController {
     public void downloadFile(HttpServletResponse response, Authentication authentication,
                              @ModelAttribute SuperDuperFile file, Model model) throws IOException {
 
-        String returnPage = "home";
         User currentUser = userService.getUser(authentication.getName());
         file = fileService.getFile(file.getFileId());
 

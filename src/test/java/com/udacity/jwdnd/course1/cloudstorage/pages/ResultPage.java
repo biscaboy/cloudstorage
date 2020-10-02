@@ -28,22 +28,19 @@ public class ResultPage extends WaitablePage {
     }
 
     public boolean isSuccessMessage(WebDriver driver) {
-        return this.waitForElement(driver, SUCCESS_MESSAGE).isDisplayed();
+        return isElementDisplayed(driver, SUCCESS_MESSAGE);
     }
 
     public boolean isErrorMessage() {
         return errorMessage.isDisplayed();
     }
+
     public boolean isErrorMessage(WebDriver driver) {
-        return this.waitForElement(driver, ERROR_MESSAGE).isDisplayed();
+        return isElementDisplayed(driver, ERROR_MESSAGE);
     }
 
     public void clickNavLink(WebDriver driver) {
         this.waitForElement(driver, NAV_LINK).click();
-    }
-
-    public boolean waitUntilLoaded(WebDriver driver) {
-        return this.waitForElement(driver, NAV_LINK).isDisplayed();
     }
 
 }

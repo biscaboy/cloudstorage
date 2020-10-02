@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+/**
+ * Service for common validation of objects that are passed to the server before
+ * passing object to the model layer for saving, editing or deleting.
+ */
 @NoArgsConstructor
 @Service
 public class ValidationService {
