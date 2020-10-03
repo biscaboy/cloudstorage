@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Base64;
 
 @Service
@@ -49,37 +50,18 @@ public class EncryptionService {
     }
 
     /**
-     * This method generates a key, but it is does not work with the
-     * algorithms above.
-     * @return
+     * AES Encryption requires a 16, 24 or 32 byte key (see https://en.wikipedia.org/wiki/Advanced_Encryption_Standard)
      *
-    public String generateKey() {
-        SecureRandom random = new SecureRandom();
-        byte[] key = new byte[8];
-        random.nextBytes(key);
-        return key.toString();
-    }
-    */
-
-    /**
-     * Creates a Secure Key for encryption/decryption
-     * This method was copied from a Udacity Knowledge base answer:
-     *      by Utkarsh S - Problem with password decryption.
-     *      https://knowledge.udacity.com/questions/275248
-     *
-     * @return secure key for use with encryptValue and decryptValue methods
+     * @return random string of size 32 bytes for encrpytion.
      */
-    public String generateSecureKey() {
-        try {
-            KeyGenerator gen = KeyGenerator.getInstance("AES");
-            gen.init(128); /* 128-bit AES */
-            SecretKey secret = gen.generateKey();
-            byte[] binary = secret.getEncoded();
-            String key = String.format("%032X", new BigInteger(+1, binary));
-            return key;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public String generateKey() {
+        // start with a 16 byte array
+        byte[] seed = (new SecureRandom()).generateSeed(16);
+
+        // parse the random into an positive integer
+        BigInteger parsed = new BigInteger(1, seed);
+
+        // format the number into hexidecimal which doubles the array size to 32 bytes.
+        return String.format("%x", parsed);
     }
 }

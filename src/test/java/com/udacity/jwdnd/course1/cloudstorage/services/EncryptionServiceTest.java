@@ -16,8 +16,14 @@ public class EncryptionServiceTest {
     @Test
     @DisplayName("Generate a random key")
     public void testGenerateKey() {
-        String key = encryptionService.generateSecureKey();
-        assertNotNull(key, "Generated key is null");
-        assertFalse(key.isBlank());
+        String password = "IceCreamSandwich21";
+        String key = encryptionService.generateKey();
+        String encrypted = encryptionService.encryptValue(password, key);
+        String decrypted = encryptionService.decryptValue(encrypted, key);
+        assertFalse(key.isBlank(), "Generated key is empty.");
+        assertNotNull(encrypted, "Encryption failed.");
+        assertNotNull(decrypted, "Decryption failed.");
+        assertNotEquals(encrypted, password, "Nothing was encrypted.");
+        assertEquals(decrypted, password, "Decryption did not produce the expected result.");
     }
 }

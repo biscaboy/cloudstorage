@@ -46,7 +46,7 @@ public class CredentialService implements CloudStorageService {
 
     private Credential encryptPassword(Credential c) {
         if (c.getKey() == null) {
-            c.setKey(encryptionService.generateSecureKey());
+            c.setKey(encryptionService.generateKey());
         }
         String encryptedPassword = encryptionService.encryptValue(c.getPassword(), c.getKey());
         c.setPassword(encryptedPassword);

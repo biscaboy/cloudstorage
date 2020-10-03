@@ -51,6 +51,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *		Moritz Petersen - Conver byte array to download file - https://stackoverflow.com/questions/13989215/how-to-convert-a-byte-into-a-file-with-a-download-dialog-box
  *		Christopher Bales - inserting a string into an HTML Input element - https://stackoverflow.com/questions/7331146/how-to-get-text-of-single-input-tag
  * 		Hari Reddy - Correct way to focus on elements using Selenium WebDriver - https://stackoverflow.com/questions/11337353/correct-way-to-focus-an-element-in-selenium-webdriver-using-java
+ *		Stephen C - Invalid AES Key Length - https://stackoverflow.com/questions/63990329/invalid-aes-key-length-12-bytes-in-java
+ *		Nthalk - How to Pad a string in Java - https://stackoverflow.com/questions/388461/how-can-i-pad-a-string-in-java
  *
  * Contributors to StackExchange:
  *		Chris Liston - Selenium Waits - https://sqa.stackexchange.com/questions/39348/unable-to-enter-text-in-twitter-using-selenium-webdriver
@@ -72,7 +74,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *	TonyD at Google Groups - Explicit Waits with PageFoctory - https://groups.google.com/g/webdriver/c/7AGczMaV578?pli=1
  *  All Selenium - How to work with expected conditions - http://allselenium.info/work-with-expected-conditions-explicit-waits/
  *  Ipseeta Priyadarshini - Anonymous fucntions in Java - https://hashnode.com/post/anonymous-functions-in-java-explained-cj1opkbj8000sml53bsq6r6cj
- *
+ *  Amit Sethi - Proper use of Java SecureRandom - https://www.synopsys.com/blogs/software-security/proper-use-of-javas-securerandom/
+ *  Wikipedia - Data Encryption Standard - https://en.wikipedia.org/wiki/Data_Encryption_Standard
+ *  		  - Advanced Encryption Standard - https://en.wikipedia.org/wiki/Advanced_Encryption_Standard
+ *  Java T Point - Java String Format - https://www.javatpoint.com/java-string-format
+ *  Tutorials Point - Java Cryptography - KeyGenerator - https://www.tutorialspoint.com/java_cryptography/java_cryptography_keygenerator.htm
  *
  *  Udacity Knowledge Base Answers:
  *  	Eban D - Escaping quotes in Thymeleaf - https://knowledge.udacity.com/questions/275287

@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * The Selenium WebDriver object fails to find page elements
  * outside of the context of the ExpectedConditions function.
  *
- * A note on using ExpectedCondions and WebDriverWaits:
+ * A note on using ExpectedConditions and WebDriverWaits:
  * if a WebElement that is defined by a @FindBy annotation using
  * the PageFactory is passed to an ExpectedCondition, the
  * method call fails to attach to the current browser DOM
