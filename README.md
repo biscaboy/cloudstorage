@@ -1,5 +1,5 @@
 # Super*Duper*Drive Cloud Storage
-Udacity Java Web Developer Nanodegree Unit 2 Final Project
+Udacity Java Web Developer Nanodegree Project 1
 
 
 This project is an exercise to acquaint the developer with 
