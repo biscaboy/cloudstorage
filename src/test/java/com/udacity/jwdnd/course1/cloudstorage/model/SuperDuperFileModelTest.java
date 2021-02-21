@@ -152,7 +152,9 @@ public class SuperDuperFileModelTest {
 
             // delete the output file from previous test runs.
             try {
-                Files.delete(Path.of(pathToOutputDoc));
+                if (Files.exists(Path.of(pathToOutputDoc))) {
+                    Files.delete(Path.of(pathToOutputDoc));
+                }
             } catch (Exception e) {
                 fail("Failed to delete existing file " + pathToOutputDoc + " : " + e.getMessage());
             }
