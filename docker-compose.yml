@@ -1,0 +1,7 @@
+version: "3.7"
+services:
+
+  cloudstorage:
+    image: biscaboy/cloudstorage:latest
+    ports:
+      - 9000:8080
