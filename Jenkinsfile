@@ -24,12 +24,5 @@ pipeline {
         sh 'docker build -t biscaboy/cloudstorage . '
       }
     }
-
-    stage('Deploy') {
-          steps {
-            sh 'docker run -dp 9000:8080 --name cloudstorage-aws biscaboy/cloudstorage'
-          }
-        }
-
   }
 }
