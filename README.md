@@ -17,6 +17,7 @@ the IntelliJ IDE.
 * [Setup](#setup)
 * [Resources](#resources)
 * [Thanks](#thanks)
+* [CI/CD](#CI/CD)
 
 ## Requirements
 The [project's rubric](https://github.com/udacity/nd035-c1-spring-boot-basics-project-starter)
@@ -182,5 +183,5 @@ Many thanks to my instructors and code reviewers at
 Special thanks to [Peter Zastoupil](https://github.com/resisttheurge) 
 for developing the course.
     
-## Jenkins CI Install
-This project pushes commits to a Jenkins installation in the AWS Cloud for builds and testing.
+## CI/CD 
+This project pushes commits to a Jenkins installation in the AWS Cloud deploys the application.
