@@ -10,10 +10,9 @@
     </head>
     <body class="p-3 mb-2 bg-light text-black">
         <div class="container justify-content-center w-50 p-3" style="background-color: #eeeeee; margin-top: 5em;">
-            <div class="form-group">
-                <label><a id="back-to-login" th:href="@{/login}">Back to Login</a></label>
-            </div>
-
+            <p class="lead">Cloudstorage
+                <span class="badge rounded-pill bg-dark text-light">Demo</span>
+                <span class="badge rounded-pill bg-info text-light">Spring MVC</span></p>
             <h1 class="display-5">Sign Up</h1>
             <form action="#" th:action="@{/signup}" method="POST">
                 <div id="success-msg" class="alert alert-dark" th:if="${signupSuccess}">
@@ -42,7 +41,16 @@
                         <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Enter Password" minlength="8" maxlength="20" required>
                     </div>
                 </div>
-                <button id="submit-button" type="submit" class="btn btn-primary">Sign Up</button>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-9 form-group">
+                            <button id="submit-button" type="submit" class="btn btn-primary">Sign Up</button>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-3 float-right"><a id="back-to-login" th:href="@{/login}">Back to Login</a></label>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </body>

@@ -10,9 +10,14 @@
     </head>
     <body class="p-3 mb-2 bg-light text-black">
         <div class="container">
-            <div id="logoutDiv">
+            <div id="logoutDiv" class="container">
                 <form action="#" th:action="@{/logout}" method="POST">
-                    <button id="btn-logout" type="submit" class="btn btn-secondary float-right">Logout</button>
+                    <div class="row">
+                        <p class="lead col-9">Cloudstorage
+                            <span class="badge rounded-pill bg-dark text-light">Demo</span>
+                            <span class="badge rounded-pill bg-info text-light">Spring MVC</span></p>
+                        <button id="btn-logout" type="submit" class="btn btn-secondary float-right">Logout</button>
+                    </div>
                 </form>
             </div>
             <div id="contentDiv" style="clear: right;">
