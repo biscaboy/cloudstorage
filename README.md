@@ -1,6 +1,5 @@
-# Super*Duper*Drive Cloud Storage
-Udacity Java Web Developer Nanodegree Project 1
-
+# Super*Duper*Drive Cloud Storage 
+Udacity Java Web Developer Nanodegree Project 1 - [Live demo](https://cloudstorage.davidjdickinson.com)
 
 This project is an exercise to acquaint the developer with 
 [Spring](https://spring.io),
@@ -17,7 +16,7 @@ the IntelliJ IDE.
 * [Setup](#setup)
 * [Resources](#resources)
 * [Thanks](#thanks)
-* [CI/CD](#CI/CD)
+* [Deployment](#deployment)
 
 ## Requirements
 The [project's rubric](https://github.com/udacity/nd035-c1-spring-boot-basics-project-starter)
@@ -183,5 +182,5 @@ Many thanks to my instructors and code reviewers at
 Special thanks to [Peter Zastoupil](https://github.com/resisttheurge) 
 for developing the course.
     
-## CI/CD 
-This project pushes commits to a Jenkins installation in the AWS Cloud deploys the application.
+## Deployment 
+This project pushes commits to a Jenkins installation in the AWS Cloud which deploys the [application to a Docker container](https://cloudstorage.davidjdickinson.com).
